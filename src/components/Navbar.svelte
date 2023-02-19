@@ -1,0 +1,66 @@
+<script>
+    import { createEventDispatcher } from "svelte";
+
+    export let backgroundColor = "lightblue";
+    export let backgroundColorSelected = "skyblue";
+    export let icons = {};
+    const iconsKeys = Object.keys(icons);
+    export let selected = iconsKeys[0];
+    const dispatchEvent = createEventDispatcher();
+
+    function handleMouseWheel(event) {
+        let selectedIndex = iconsKeys.findIndex((icon) => icon === selected);
+        if(event.wheelDelta > 0) {
+            selectedIndex++;
+        }
+        else {
+            selectedIndex--;
+        }
+        selected = iconsKeys.at(selectedIndex);
+        dispatchEvent("select", selected);
+    }
+</script>
+
+<nav style="
+    --background-color: {backgroundColor};
+    --background-color-selected: {backgroundColorSelected}" 
+    on:mousewheel={handleMouseWheel}
+>
+    {#each Object.entries(icons) as icon}
+        <button
+            on:click={() => {
+                selected = icon[0];
+                dispatchEvent("select", selected);
+            }}
+            class:selected={icon[0] === selected}
+            style="width: calc(100vw / {iconsKeys.length});"
+        >
+            <img src={icon[1]} alt={icon[0]}>
+        </button>
+    {/each}
+</nav>
+
+<style>
+    nav {
+        background-color: var(--background-color);
+        width: 100vw;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    button {
+        background-color: var(--background-color);
+        border: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .selected {
+        background-color: var(--background-color-selected);
+    }
+</style>

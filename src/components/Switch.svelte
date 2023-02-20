@@ -1,19 +1,13 @@
 <script>
-    export let colorOn = "lightblue";
-    export let colorOff = "grey";
     export let width = 50;
     export let height = 25;
-    export let borderRadius = 5;
+    export let borderRadius = "5px";
     export let on = false;
 </script>
 
-<button style="
-    width: {width};
-    height: {height};
-    --color-on: {colorOn};
-    --color-off: {colorOff};
-    --border-radius: {borderRadius};"
+<button 
     on:click={() => on = !on} on:click 
+    style:height style:width style:--border-radius={borderRadius}
     class:on
 >   
 </button>
@@ -22,10 +16,10 @@
     button {
         border: 0;
         cursor: pointer;
-        background-color: var(--color-off);
+        background-color: grey;
         display: block;
         position: relative;
-        border-radius: calc(var(--border-radius) * 1px);
+        border-radius: var(--border-radius);
     }
 
     button::after {
@@ -36,12 +30,12 @@
         width: 45%;
         height: 80%;
         background-color: white;
-        border-radius: calc(var(--border-radius) * 0.8px);
+        border-radius: calc(var(--border-radius) * 0.8);
         transition: 0.5s;
     }
 
     .on {
-        background: var(--color-on);
+        background: var(--main-color);
     }
 
     .on::after {

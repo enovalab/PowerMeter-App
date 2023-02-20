@@ -1,9 +1,8 @@
 <script>
-    export let color = "lightblue";
     export let title;
 </script>
 
-<header style="background-color: {color};">
+<header>
     <h1>{title}</h1>
     <slot></slot>
 </header>
@@ -14,6 +13,7 @@
         height: 40px;
         display: flex;
         align-items: center;
+        background-color: var(--main-color);
     }
 
     h1 {

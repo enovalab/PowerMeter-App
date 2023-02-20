@@ -1,8 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
 
-    export let backgroundColor = "lightblue";
-    export let backgroundColorSelected = "skyblue";
     export let icons = {};
     const iconsKeys = Object.keys(icons);
     export let selected = iconsKeys[0];
@@ -21,28 +19,25 @@
     }
 </script>
 
-<nav style="
-    --background-color: {backgroundColor};
-    --background-color-selected: {backgroundColorSelected}" 
-    on:mousewheel={handleMouseWheel}
+<nav on:mousewheel={handleMouseWheel}
 >
-    {#each Object.entries(icons) as icon}
+    {#each Object.entries(icons) as [iconKey, iconValue]}
         <button
             on:click={() => {
-                selected = icon[0];
+                selected = iconKey;
                 dispatchEvent("select", selected);
             }}
-            class:selected={icon[0] === selected}
+            class:selected={iconKey === selected}
             style="width: calc(100vw / {iconsKeys.length});"
         >
-            <img src={icon[1]} alt={icon[0]}>
+            <img src={iconValue} alt={iconKey}>
         </button>
     {/each}
 </nav>
 
 <style>
     nav {
-        background-color: var(--background-color);
+        background-color: var(--main-color);
         width: 100vw;
         height: 40px;
         display: flex;
@@ -50,7 +45,7 @@
     }
 
     button {
-        background-color: var(--background-color);
+        background-color: var(--main-color);
         border: 0;
         padding: 0;
         height: 100%;
@@ -61,6 +56,6 @@
     }
 
     .selected {
-        background-color: var(--background-color-selected);
+        background-color: var(--accent-color);
     }
 </style>

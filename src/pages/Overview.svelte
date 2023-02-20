@@ -3,13 +3,11 @@
     import Header from "../components/Header.svelte";
     import Navbar from "../components/Navbar.svelte";
     import DeviceCard from "../components/DeviceCard.svelte";
-    import Chart from "../components/Chart.svelte";
 
 </script>
 <div class="page">
     <Header title="Hello" color="var(--main-color)"></Header>
     <main>
-        <Chart class="chart"/>
         <DeviceCard power=100 online={false} mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
         <DeviceCard power=2131312312 mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
         <DeviceCard power=100 mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
@@ -25,10 +23,6 @@
 </div>
 
 <style>
-    :global(.chart div) {
-        width: 200px;
-    }
-
     .page {
         width: 100vw;
         height: 100vh;

@@ -2,10 +2,6 @@
     import Switch from "./Switch.svelte";
     import { createEventDispatcher } from "svelte";
 
-    export let textColor = "white";
-    export let backgroundColor = "rgb(25, 25, 25)";
-    export let mainColor = "lightblue";
-    export let accentColor = "blue";
     export let name = "Power Meter";
     let ip = "192.168.178.81";
     export let online = true;
@@ -13,8 +9,8 @@
     const dispatchEvent = createEventDispatcher();
 </script>
 
-<div class="wrapper" style="--this-main-color: {mainColor}; --this-accent-color: {accentColor}; --text-color: {textColor}">
-    <section class:online style="background-color: {backgroundColor};">
+<div class="wrapper">
+    <section class:online>
         <button on:click={() => {
             if(confirm(`Are you sure you want to delete '${name}'?`)) {
                 dispatchEvent("delete", name);
@@ -27,7 +23,7 @@
             <span>{ip}</span>
             <span class:power-offline={!online} >{power} W</span>
         </a>  
-        <Switch width={window.innerWidth < 700 ? "30px" : "50px"} colorOn={mainColor}/>
+        <Switch width=50px height=25px/>
     </section>
 </div>
 
@@ -50,10 +46,11 @@
         justify-content: space-between;
         align-items: center;
         padding-right: clamp(20px, 5%, 60px);
+        background-color: var(--background-color-dark);
     }
     
     .online {
-        color: var(--text-color);
+        color: var(--contrast-color);
     }
 
     a {
@@ -63,7 +60,7 @@
         justify-content: center;
         align-items: center;
         height: 100%;
-        color: var(--text-color);
+        color: var(--contrast-color);
         text-decoration: none;
         cursor: pointer;
     }

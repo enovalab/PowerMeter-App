@@ -37,7 +37,6 @@
 
 <style>
     nav {
-        background-color: var(--main-color);
         width: 100vw;
         height: 40px;
         display: flex;

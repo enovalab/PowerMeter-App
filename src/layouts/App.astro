@@ -37,4 +37,17 @@ import Header from "../components/Header.svelte";
         border: 0;
         font-family: "Dosis";
     }
+
+    :global(.bar) {
+        background-color: var(--main-color);
+    }
+
+    :global(.card) {
+        background-color: var(--background-color-dark);
+        width: clamp(100px, 85vw, 1000px);
+        border-radius: 20px;
+        --margin-top-bottom: 2vh;
+        margin-top: var(--margin-top-bottom);
+        margin-bottom: var(--margin-top-bottom);
+    }
 </style>

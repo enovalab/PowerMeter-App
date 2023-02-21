@@ -9,44 +9,31 @@
     const dispatchEvent = createEventDispatcher();
 </script>
 
-<div class="wrapper">
-    <section class:online>
-        <button on:click={() => {
-            if(confirm(`Are you sure you want to delete '${name}'?`)) {
-                dispatchEvent("delete", name);
-            }
-        }}>
-            <img src="../icons/delete_black_24dp.svg" alt="delete">
-        </button>
-        <a href={`http://${ip}`}>
-            <h2>{name}</h2>
-            <span>{ip}</span>
-            <span class:power-offline={!online} >{power} W</span>
-        </a>  
-        <Switch width=50px height=25px/>
-    </section>
-</div>
+<section class="card" class:online>
+    <button on:click={() => {
+        if(confirm(`Are you sure you want to delete '${name}'?`)) {
+            dispatchEvent("delete", name);
+        }
+    }}>
+        <img src="../icons/delete_black_24dp.svg" alt="delete">
+    </button>
+    <a href={`http://${ip}`}>
+        <h2>{name}</h2>
+        <span>{ip}</span>
+        <span class:power-offline={!online} >{power} W</span>
+    </a>  
+    <Switch width=50px height=25px/>
+</section>
 
 <style>
-    .wrapper {
-        width: 100%;
-        height: 150px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
     section {
-        width: clamp(100px, 85%, 1000px);
-        height: 80%;
-        border-radius: 20px;
+        height: 300px;
         color: rgb(124, 124, 124);
         overflow: hidden;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-right: clamp(20px, 5%, 60px);
-        background-color: var(--background-color-dark);
     }
     
     .online {

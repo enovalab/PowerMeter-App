@@ -8,11 +8,13 @@
 <div class="page">
     <Header title="Hello" color="var(--main-color)"></Header>
     <main>
-        <DeviceCard power=100 online={false} mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
-        <DeviceCard power=2131312312 mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
-        <DeviceCard power=100 mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
-        <DeviceCard power=100 mainColor="var(--main-color)" accentColor="var(--accent-color)" backgroundColor="var(--background-color-dark)"/>
-
+        <DeviceCard power=100 online={false}/>
+        <DeviceCard power=213131231/>
+        <DeviceCard power=100/>
+        <DeviceCard power=100/>
+        <DeviceCard power=100/>
+        <DeviceCard power=100/>
+        <DeviceCard power=100/>
     </main>
     <Navbar backgroundColor="var(--main-color)" backgroundColorSelected="var(--accent-color" icons={{
         power: "../icons/power_black_24dp.svg",    
@@ -32,8 +34,13 @@
     }
 
     main {
+        width: 100vw;
         background-color: var(--background-color);
-        flex: 1;
+        /* flex: 1; */
         overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
     }
 </style>

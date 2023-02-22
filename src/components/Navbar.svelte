@@ -1,36 +1,58 @@
 <script>
     import { createEventDispatcher } from "svelte";
 
-    export let icons = {};
-    const iconsKeys = Object.keys(icons);
-    export let selected = iconsKeys[0];
-    const dispatchEvent = createEventDispatcher();
+    export let tabs = []; 
+    export let selected = 0;
+    export let title = "";
+    $: (title = tabs[selected].title)
 
+    const dispatchEvent = createEventDispatcher();
+    
     function handleMouseWheel(event) {
-        let selectedIndex = iconsKeys.findIndex((icon) => icon === selected);
         if(event.wheelDelta > 0) {
-            selectedIndex++;
+            nextTab();
         }
         else {
-            selectedIndex--;
+            preceedingTab();
         }
-        selected = iconsKeys.at(selectedIndex);
-        dispatchEvent("select", selected);
+        dispatchEvent("select", {selected, title});
+    }
+
+    function nextTab() {
+        if(selected >= tabs.length - 1) {
+            selected = 0;
+        }
+        else {
+            selected++;
+        }
+    }
+
+    function preceedingTab() {
+        if(selected <= 0) {
+            selected = tabs.length - 1;
+        }
+        else {
+            selected--;
+        }
     }
 </script>
 
-<nav on:mousewheel={handleMouseWheel}
+<header class="bar">
+    <h1>{title}</h1>
+</header>
+<slot></slot>
+<nav class="bar" on:mousewheel={handleMouseWheel}
 >
-    {#each Object.entries(icons) as [iconKey, iconValue]}
+    {#each tabs as tab, i}
         <button
             on:click={() => {
-                selected = iconKey;
-                dispatchEvent("select", selected);
+                selected = i;
+                dispatchEvent("select", {selected, title});
             }}
-            class:selected={iconKey === selected}
-            style="width: calc(100vw / {iconsKeys.length});"
+            class:selected={i === selected}
+            style:width="calc(100vw / {tabs.length})"
         >
-            <img src={iconValue} alt={iconKey}>
+            <img src={tab.icon} alt={tab.title}>
         </button>
     {/each}
 </nav>
@@ -54,6 +76,19 @@
         cursor: pointer;
     }
 
+    header {
+        width: 100vw;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    h1 {
+        margin: 0;
+        padding-left: 20px;
+        font-size: 1.5rem;
+    }
+    
     .selected {
         background-color: var(--accent-color);
     }

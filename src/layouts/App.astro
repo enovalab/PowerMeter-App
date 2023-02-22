@@ -24,8 +24,8 @@ import Header from "../components/Header.svelte";
     }
     
     :root {
-        --main-color: rgb(0, 171, 209);
-        --accent-color: rgb(0, 122, 209);
+        --main-color: hsl(191, 100%, 50%);
+        --accent-color: hsl(191, 100%, 78%);
         --background-color: rgb(32, 32, 32);
         --background-color-dark: rgb(24, 24, 24);
         --contrast-color: rgb(255, 255, 255);
@@ -36,10 +36,13 @@ import Header from "../components/Header.svelte";
         padding: 0;
         border: 0;
         font-family: "Dosis";
+        background-color: var(--background-color);
     }
 
     :global(.bar) {
+        z-index: 1;
         background-color: var(--main-color);
+        box-shadow: 0 0 30px var(--background-color);
     }
 
     :global(.card) {

@@ -1,46 +1,46 @@
 <script>
     import Switch from "../components/Switch.svelte";
-    import Header from "../components/Header.svelte";
     import Navbar from "../components/Navbar.svelte";
     import DeviceCard from "../components/DeviceCard.svelte";
-
+    import AddDeviceForm from "../components/AddDeviceForm.svelte";
+    
+    let title = "Foo";
 </script>
-<div class="page">
-    <Header title="Hello" color="var(--main-color)"></Header>
-    <main>
-        <DeviceCard power=100 online={false}/>
-        <DeviceCard power=213131231/>
-        <DeviceCard power=100/>
-        <DeviceCard power=100/>
-        <DeviceCard power=100/>
-        <DeviceCard power=100/>
-        <DeviceCard power=100/>
-    </main>
-    <Navbar backgroundColor="var(--main-color)" backgroundColorSelected="var(--accent-color" icons={{
-        power: "../icons/power_black_24dp.svg",    
-        tracker: "../icons/query_stats_black_24dp.svg",    
-        config: "../icons/construction_black_24dp.svg",
-        about: "../icons/help_outline_black_24dp.svg",
-    }}/>
+
+<div id="page">
+    <Navbar tabs = {[
+        {title: "Overview", icon: "../icons/view_list_black_24dp.svg"},
+        {title: "Tracker", icon: "../icons/query_stats_black_24dp.svg"},
+        {title: "Configuration", icon: "../icons/construction_black_24dp.svg"},
+        {title: "About", icon: "../icons/help_outline_black_24dp.svg"}
+    ]}>
+        <main>
+            <DeviceCard online={false}/>
+            <DeviceCard/>
+            <DeviceCard/>
+            <DeviceCard/>
+            <DeviceCard/>
+            <DeviceCard online={false}/>
+        </main>
+    </Navbar>
 </div>
 
 <style>
-    .page {
+    #page {
         width: 100vw;
         height: 100vh;
         display: flex;
         flex-direction: column;
-        overflow-y: hidden;
+        justify-content: flex-start;
     }
 
     main {
-        width: 100vw;
-        background-color: var(--background-color);
-        /* flex: 1; */
-        overflow-y: scroll;
+        width: 100%;
+        height: 100%;
+        flex: 1;
+        overflow-y: scroll;   
         display: flex;
         flex-direction: column;
-        align-items: center;
-        
+        align-items: center;     
     }
 </style>

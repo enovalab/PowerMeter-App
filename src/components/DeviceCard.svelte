@@ -9,7 +9,7 @@
     const dispatchEvent = createEventDispatcher();
 </script>
 
-<section class="card" class:online>
+<section class="card">
     <button on:click={() => {
         if(confirm(`Are you sure you want to delete '${name}'?`)) {
             dispatchEvent("delete", name);
@@ -17,7 +17,7 @@
     }}>
         <img src="../icons/delete_black_24dp.svg" alt="delete">
     </button>
-    <a href={`http://${ip}`}>
+    <a href={`http://${ip}`} class:online>
         <h2>{name}</h2>
         <span>{ip}</span>
         <span class:power-offline={!online} >{power} W</span>
@@ -27,8 +27,8 @@
 
 <style>
     section {
-        height: 300px;
-        color: rgb(124, 124, 124);
+        height: 150px;
+        min-height: 150px;
         overflow: hidden;
         display: flex;
         justify-content: space-between;
@@ -47,7 +47,7 @@
         justify-content: center;
         align-items: center;
         height: 100%;
-        color: var(--contrast-color);
+        color: rgb(86, 86, 86);
         text-decoration: none;
         cursor: pointer;
     }

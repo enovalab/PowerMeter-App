@@ -17,7 +17,7 @@
     }}>
         <img src="../icons/delete_black_24dp.svg" alt="delete">
     </button>
-    <a href={`http://${ip}`} class:online>
+    <a class="flex-column-center-all" href={`http://${ip}`} class:online>
         <h2>{name}</h2>
         <span>{ip}</span>
         <span class:power-offline={!online} >{power} W</span>
@@ -34,6 +34,7 @@
         justify-content: space-between;
         align-items: center;
         padding-right: clamp(20px, 5%, 60px);
+        box-sizing: border-box;
     }
     
     .online {
@@ -41,11 +42,11 @@
     }
 
     a {
-        flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        flex: 1;
         height: 100%;
         color: rgb(86, 86, 86);
         text-decoration: none;

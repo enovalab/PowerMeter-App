@@ -4,7 +4,7 @@
     export let tabs = []; 
     export let selected = 0;
     export let title = "";
-    $: (title = tabs[selected].title)
+    $: {title = tabs[selected].title}
 
     const dispatchEvent = createEventDispatcher();
     

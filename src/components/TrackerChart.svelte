@@ -1,53 +1,57 @@
 <script>
-    import { Chart } from "chart.js";
+    import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
-    
-    const data = {
-        labels: ["foo", "bar", "boo", "buz"],
-        datasets: [
-            {
-                label: "Active Power",
-                data: [5, 3, 7, 9],
-                borderWidth: 1,
-                borderColor: "blue",
-                backgroundColor: "blue",
-                tension: 0.3
-            }
-        ]
-    };
-    
-    const options = {
-        responsive: true,
-        maintainAspectRatio: true,
-        scales: {
-            x: {
-                grid: {
-                    color: "white"
-                }
-            },
-            y: {
-                grid: {
-                    color: "white"
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
-            }
-        }
-    };
 
-    const chart = new Chart(document.getElementById("myChart"), {
+    let chart;
+
+    Chart.defaults.font.family = "Dosis";
+    Chart.defaults.font.size = 18;
+
+    onMount(() => {
+        chart = new Chart("chart", {
             type: "line",
-            data: data,
-            options: options
+            data: {
+                labels: ["foo", "bar", "boo", "buz"],
+                datasets: [
+                    {
+                        label: "Active Power",
+                        data: [5, 3, 7, 9],
+                        borderWidth: 1,
+                        fill: true,
+                        borderColor: "rgb(255, 0, 0)",
+                        backgroundColor: "rgba(255, 0, 0, 0.1)",
+                        tension: 0.3,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    x: {
+                        grid: {
+                            color: "white",
+                        },
+                    },
+                    y: {
+                        grid: {
+                            color: "white",
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
         });
+    });
 </script>
 
 <section class="card">
-    <div class="chart">
-        <canvas id="myChart" width=400 height=400></canvas>
+    <div>
+        <canvas id="chart" />
     </div>
     <div class="navigator">
         <img src="../icons/arrow_back_ios_white_24dp.svg" alt="Previous Chart"/>
@@ -59,31 +63,27 @@
     </div>
 </section>
 
-
 <style>
-    div {
-        width: 95%;
-    }
-    
     section {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
-        
+        justify-content: space-between;
+        padding-top: 2%;
+        padding-bottom: 2%;
     }
 
-    .chart {
+    div > #chart {
         display: flex;
         justify-content: center;
     }
 
     .navigator {
+        width: 95%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 5%;
-        margin-bottom: 5%;
+        margin-top: 2%;
     }
 
     .info {

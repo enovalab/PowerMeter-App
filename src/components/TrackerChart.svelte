@@ -2,11 +2,11 @@
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
 
-    let chart;
-
+    
     Chart.defaults.font.family = "Dosis";
     Chart.defaults.font.size = 18;
-
+    
+    let chart;
     onMount(() => {
         chart = new Chart("chart", {
             type: "line",
@@ -26,7 +26,7 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 scales: {
                     x: {
                         grid: {
@@ -50,7 +50,7 @@
 </script>
 
 <section class="card">
-    <div>
+    <div class="chart-container">
         <canvas id="chart" />
     </div>
     <div class="navigator">
@@ -65,6 +65,7 @@
 
 <style>
     section {
+        height: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -73,9 +74,9 @@
         padding-bottom: 2%;
     }
 
-    div > #chart {
-        display: flex;
-        justify-content: center;
+    .chart-container {
+        height: 90%;
+        width: 90%;
     }
 
     .navigator {

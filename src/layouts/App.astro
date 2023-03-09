@@ -37,10 +37,10 @@ import Header from "../components/Header.svelte";
         border: 0;
         font-family: "Dosis";
         background-color: var(--background-color);
-        color: var(--contrast-color);
         user-select: none;
+        color: var(--contrast-color);
     }
-
+    
     :global(.bar) {
         z-index: 1;
         background-color: var(--main-color);
@@ -55,5 +55,15 @@ import Header from "../components/Header.svelte";
         --margin-top-bottom: 2vh;
         margin-top: var(--margin-top-bottom);
         margin-bottom: var(--margin-top-bottom);
+    }
+
+    :global(.card-padding) {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    :global(button) {
+        border: 0;
+        cursor: pointer;
     }
 </style>

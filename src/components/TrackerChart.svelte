@@ -2,26 +2,53 @@
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
 
+    export let title;
+    export let dataColor;
+    export let data;
+    export let secondsBetweenSamples;
+
+    let labels = [];
+    data.forEach((dataItem, index) => {
+        const labelDate = new Date(Date.now() - index * secondsBetweenSamples * 1000);
+        let labelString;
+        if(secondsBetweenSamples < 24 * 3600) {
+            labelString = labelDate.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+        }
+        else if(secondsBetweenSamples < 30 * 24 * 3600) {
+            labelString = labelDate.toLocaleDateString([], {day: "2-digit", month: "short"});
+        }
+        else if(secondsBetweenSamples <300 * 24 * 3600) {
+            labelString = labelDate.toLocaleDateString([], {month: "short", year: "2-digit"});
+        }
+        else {
+            labelString = labelDate.toLocaleDateString([], {year: "numeric"});
+        }
+        labels.unshift(labelString);
+    });
+
+    $: averagePower = averageArray(data).toFixed(3);
+    $: energy = ((averagePower * data.length * secondsBetweenSamples) / 3.6e+6).toFixed(3);
     
-    Chart.defaults.font.family = "Dosis";
-    Chart.defaults.font.size = 18;
-    
+    const chartID = Math.random().toString(36).slice(2, 7);    
     let chart;
+    
     onMount(() => {
-        chart = new Chart("chart", {
+        const conrtrastColor = getComputedStyle(document.body).getPropertyValue("--contrast-color");
+        Chart.defaults.font.family = "Dosis";
+        Chart.defaults.font.size = 18;
+        chart = new Chart(chartID, {
             type: "line",
             data: {
-                labels: ["foo", "bar", "boo", "buz"],
-                datasets: [
-                    {
-                        label: "Active Power",
-                        data: [5, 3, 7, 9],
-                        borderWidth: 1,
-                        fill: true,
-                        borderColor: "rgb(255, 0, 0)",
-                        backgroundColor: "rgba(255, 0, 0, 0.1)",
-                        tension: 0.3,
-                    },
+                labels,
+                datasets: [{
+                    label: "Active Power",
+                    data,
+                    borderWidth: 2,
+                    fill: true,
+                    borderColor: dataColor,
+                    backgroundColor: addAlphaToRGB(dataColor, 0.2),
+                    tension: 0.3,
+                },
                 ],
             },
             options: {
@@ -30,13 +57,13 @@
                 scales: {
                     x: {
                         grid: {
-                            color: "white",
+                            color: addAlphaToRGB(conrtrastColor, 0.2),
                         },
                     },
                     y: {
                         grid: {
-                            color: "white",
-                        },
+                            color: addAlphaToRGB(conrtrastColor, 0.2),
+                        }
                     },
                 },
                 plugins: {
@@ -45,60 +72,67 @@
                     },
                 },
             },
-        });
+        });    
     });
+    
+    function addAlphaToRGB(rgb, alpha) {
+        if (alpha < 0) {
+            alpha = 0;
+        } else if (alpha > 1) {
+            alpha = 1;
+        }
+        let colorArray = rgb.match(/\d+/g);
+        return `rgba(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}, ${alpha})`;
+    }
+
+    function averageArray(array) {
+        const sum = array.reduce((a, b) => a + b, 0);
+        return sum / array.length || 0;
+    }
 </script>
 
-<section class="card">
+<section class="card card-padding">
+    <h2>{title}</h2>
     <div class="chart-container">
-        <canvas id="chart" />
+        <canvas id={chartID}/>
     </div>
-    <div class="navigator">
-        <img src="../icons/arrow_back_ios_white_24dp.svg" alt="Previous Chart"/>
-        <div class="info">
-            <h2>Last 24 Hours</h2>
-            <span>1002 kWh</span>
-        </div>
-        <img src="../icons/arrow_forward_ios_white_24dp.svg" alt="Next Chart"/>
+    <div class="info">
+        <span>Energy</span>
+        <span class="right-aligned">{energy}</span>
+        <span class="right-aligned">kWh</span>
+
+        <span>Average Power</span>
+        <span class="right-aligned">{averagePower}</span>
+        <span class="right-aligned">W</span>
     </div>
 </section>
 
 <style>
     section {
-        height: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        padding-top: 2%;
-        padding-bottom: 2%;
+        scroll-snap-align: start;
     }
 
     .chart-container {
-        height: 90%;
+        height: 40vh;
         width: 90%;
-    }
-
-    .navigator {
-        width: 95%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 2%;
-    }
-
-    .info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     h2 {
         margin: 0;
     }
 
-    img {
-        height: 40px;
-        cursor: pointer;
+    .info {
+        width: min(80%, 300px);
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    .right-aligned {
+        text-align: right;
     }
 </style>

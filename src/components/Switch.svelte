@@ -14,8 +14,6 @@
 
 <style>
     button {
-        border: 0;
-        cursor: pointer;
         background-color: grey;
         display: block;
         position: relative;

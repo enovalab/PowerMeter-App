@@ -4,7 +4,7 @@
 
     export let name = "Power Meter";
     let ip = "192.168.178.81";
-    export let online = true;
+    export let isOnline = true;
     export let power = 132.89;
     const dispatchEvent = createEventDispatcher();
 </script>
@@ -17,10 +17,10 @@
     }}>
         <img src="../icons/delete_black_24dp.svg" alt="delete">
     </button>
-    <a class="flex-column-center-all" href={`http://${ip}`} class:online>
+    <a class="flex-column-center-all" href={`http://${ip}`} class:offline="{isOnline}">
         <h2>{name}</h2>
         <span>{ip}</span>
-        <span class:power-offline={!online} >{power} W</span>
+        <span class:power-offline={!isOnline} >{power} W</span>
     </a>  
     <Switch width=50px height=25px/>
 </section>
@@ -37,22 +37,22 @@
         box-sizing: border-box;
     }
     
-    .online {
-        color: var(--contrast-color);
-    }
-
     a {
+        color: var(--contrast-color);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         flex: 1;
         height: 100%;
-        color: rgb(86, 86, 86);
         text-decoration: none;
         cursor: pointer;
     }
 
+    .offline {
+        color: rgb(86, 86, 86); 
+    }
+    
     a > * {
         text-align: center;
     }
@@ -85,9 +85,7 @@
         align-items: center;
         height: 100%;
         width: clamp(30px, 10%, 60px);
-        border: 0;
         background-color: var(--main-color);
-        cursor: pointer;
     }
 
     button:active {

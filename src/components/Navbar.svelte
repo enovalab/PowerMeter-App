@@ -2,9 +2,9 @@
     import { createEventDispatcher } from "svelte";
 
     export let tabs = []; 
-    export let selected = 0;
+    export let selectedIndex = 0;
     export let title = "";
-    $: {title = tabs[selected].title}
+    $: {title = tabs[selectedIndex].title}
 
     const dispatchEvent = createEventDispatcher();
     
@@ -13,26 +13,26 @@
             nextTab();
         }
         else {
-            preceedingTab();
+            preceedTab();
         }
-        dispatchEvent("select", {selected, title});
+        dispatchEvent("select", {selected: selectedIndex, title});
     }
 
     function nextTab() {
-        if(selected >= tabs.length - 1) {
-            selected = 0;
+        if(selectedIndex >= tabs.length - 1) {
+            selectedIndex = 0;
         }
         else {
-            selected++;
+            selectedIndex++;
         }
     }
 
-    function preceedingTab() {
-        if(selected <= 0) {
-            selected = tabs.length - 1;
+    function preceedTab() {
+        if(selectedIndex <= 0) {
+            selectedIndex = tabs.length - 1;
         }
         else {
-            selected--;
+            selectedIndex--;
         }
     }
 </script>
@@ -46,10 +46,10 @@
     {#each tabs as tab, i}
         <button
             on:click={() => {
-                selected = i;
-                dispatchEvent("select", {selected, title});
+                selectedIndex = i;
+                dispatchEvent("select", {selectedIndex, title});
             }}
-            class:selected={i === selected}
+            class:selected={i === selectedIndex}
             style:width="calc(100vw / {tabs.length})"
         >
             <img src={tab.icon} alt={tab.title}>
@@ -62,18 +62,17 @@
         width: 100vw;
         height: 40px;
         display: flex;
-        align-items: center;
+        align-items: end;
+        background-color: var(--main-color);
     }
 
     button {
         background-color: var(--main-color);
-        border: 0;
         padding: 0;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: pointer;
     }
 
     header {
@@ -88,6 +87,10 @@
         margin: 0;
         padding-left: 20px;
         font-size: 1.5rem;
+    }
+
+    img {
+        height: 30px;
     }
     
     .selected {

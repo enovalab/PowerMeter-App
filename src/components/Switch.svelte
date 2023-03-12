@@ -2,13 +2,13 @@
     export let width = 50;
     export let height = 25;
     export let borderRadius = "5px";
-    export let on = false;
+    export let isOn = false;
 </script>
 
 <button 
-    on:click={() => on = !on} on:click 
+    on:click={() => isOn = !isOn} on:click 
     style:height style:width style:--border-radius={borderRadius}
-    class:on
+    class:on="{isOn}"
 >   
 </button>
 

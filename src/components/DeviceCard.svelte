@@ -3,9 +3,9 @@
     import { createEventDispatcher } from "svelte";
 
     export let name = "Power Meter";
-    let ip = "192.168.178.81";
-    export let isOnline = true;
-    export let power = 132.89;
+    export let ip = "192.168.178.81";
+    let isOnline = false;
+    let power = 132.89;
     const dispatchEvent = createEventDispatcher();
 </script>
 
@@ -17,7 +17,7 @@
     }}>
         <img src="../icons/delete_black_24dp.svg" alt="delete">
     </button>
-    <a class="flex-column-center-all" href={`http://${ip}`} class:offline="{isOnline}">
+    <a class="flex-column-center-all" href={`http://${ip}`} class:offline="{!isOnline}">
         <h2>{name}</h2>
         <span>{ip}</span>
         <span class:power-offline={!isOnline} >{power} W</span>
@@ -27,6 +27,7 @@
 
 <style>
     section {
+        box-sizing: border-box;
         height: 150px;
         min-height: 150px;
         overflow: hidden;
@@ -34,7 +35,6 @@
         justify-content: space-between;
         align-items: center;
         padding-right: clamp(20px, 5%, 60px);
-        box-sizing: border-box;
     }
     
     a {
@@ -50,7 +50,7 @@
     }
 
     .offline {
-        color: rgb(86, 86, 86); 
+        color: var(--inactive-color);
     }
     
     a > * {

@@ -29,7 +29,8 @@
     <div class="table">
         {#each measurements as measurement, i}
             <div 
-                style:color={isOn ? `hsl(${i / measurements.length * 360}, 100%, 80%)` : "var(--inactive-color)"}
+                style:--color={isOn ? `hsl(${i / measurements.length * 360}, 100%, 80%)` : "var(--inactive-color)"}
+                style:box-shadow={isOn ? "0 0 5px 3px var(--color)" : "0 0 0 3px var(--color)"}
             >
                 <h2>{measurement.title}</h2>
                 <span>{Object.values(power).at(i)} {measurement.unit}</span>
@@ -62,7 +63,9 @@
         flex-direction: column;
         align-items: center;
         padding: 10px;
-        transition: color 1.5s;
+        transition: color 1.5s, box-shadow 1.5s;
+        border-radius: 10px;
+        color: var(--color);
     }
     
     h2 {

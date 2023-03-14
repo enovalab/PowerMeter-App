@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+    "short_name": "Power Meter",
+    "name": "Power Meter App",
+    "description": "Monitor and control your power consumption",
+    "categories": ["iot", "smarthome"],
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "Overview/index.html",
+    "background_color": "rgb(86, 86, 86)",
+    "theme_color": "rgb(86, 86, 86)",
+    "icons": [
+        {
+            "src": "icons/bolt_blue_24dp.svg",
+            "type": "image/svg+xml",
+            "sizes": "any"
+        }
+    ]
+}

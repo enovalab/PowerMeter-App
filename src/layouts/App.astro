@@ -6,6 +6,8 @@ import Header from "../components/Header.svelte";
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json"/>
+    <link rel="shortcut icon" href="../icons/bolt_blue_24dp.svg" type="image/x-icon">
     <title>Power Meter</title>
 </head>
 <body>
@@ -24,8 +26,8 @@ import Header from "../components/Header.svelte";
     }
     
     :root {
-        --main-color: hsl(191, 100%, 50%);
-        --accent-color: hsl(191, 100%, 78%);
+        --main-color: rgb(0, 208, 255);
+        --accent-color: rgb(143, 234, 255);
         --background-color: rgb(32, 32, 32);
         --background-color-dark: rgb(24, 24, 24);
         --contrast-color: rgb(255, 255, 255);

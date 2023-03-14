@@ -64,6 +64,7 @@
         display: flex;
         align-items: end;
         background-color: var(--main-color);
+        --blur-radius: 20px;
     }
 
     button {
@@ -73,6 +74,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    @media(hover: hover) and (pointer: fine) {
+        button:hover {
+            box-shadow: 0 0 var(--blur-radius) var(--main-color);
+        }
     }
 
     header {
@@ -95,5 +102,6 @@
     
     .selected {
         background-color: var(--accent-color);
+        box-shadow: 0 0 var(--blur-radius) var(--accent-color);
     }
 </style>

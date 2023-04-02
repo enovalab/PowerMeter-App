@@ -5,8 +5,6 @@
     import Config from "../tabs/Config.svelte";
     import Info from "../tabs/Info.svelte";
 
-    
-    let title = "Foo";
     let selectedTabIndex = 2;
 </script>
 

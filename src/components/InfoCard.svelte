@@ -4,7 +4,6 @@
 
 <style>
     .card {
-        box-sizing: border-box;
         font-size: 15px;
         padding: 20px;
         display: grid;

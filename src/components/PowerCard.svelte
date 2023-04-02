@@ -1,8 +1,10 @@
 <script>
     import Overview from "../pages/Overview.svelte";
     import Switch from "./Switch.svelte";
+    import { onMount } from "svelte";
+    import { E } from "../../dist/_astro/Info.89e888bd";
     
-    let isOn;
+    let isOn = false;
 
     const measurements = [
         {title: "Active Power", unit: "W"},
@@ -22,11 +24,46 @@
         powerFactor: 0
     };
 
+    async function callRestAPI(url, method = "GET", data) {
+        const options = {
+            method,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        if(data) {
+            options.body = JSON.stringify(data);
+        }
+
+        try {
+            const response = await fetch(url, options);
+            if(!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        }
+        catch(error) {
+            console.error(error);
+        }
+        
+    }
+
+    const baseURL = "http://192.168.178.153";
+
+    onMount(async () => {
+        const response = await callRestAPI(`${baseURL}/api/config/relay`);
+        isOn = response.state;
+    });
+
+    async function handleSwitchClick() {
+        const response =  await callRestAPI(`${baseURL}/api/config/relay`, "PATCH", {state: isOn});
+        isOn = response.state;
+    }
 </script>
 
 <div class="card">
-    <Switch width=200px height=100px borderRadius=20px bind:isOn/>
-    <div class="table">
+    <div class="grid">
         {#each measurements as measurement, i}
             <div 
                 style:--color={isOn ? `hsl(${i / measurements.length * 360}, 100%, 80%)` : "var(--inactive-color)"}
@@ -37,6 +74,7 @@
             </div>
         {/each}
     </div>
+    <Switch width=200px height=100px borderRadius=20px bind:isOn on:click={handleSwitchClick}/>
 </div>
 
 <style>
@@ -44,13 +82,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-sizing: border-box;
         padding: 20px;
     }
 
-    .table {
+    .grid {
         width: 100%;
-        margin-top: 20px;
+        margin-bottom: 50px;
         display: grid;
         grid-template-columns: 100%;
         column-gap: 20px;
@@ -58,7 +95,7 @@
     }
 
     
-    .table > div {
+    .grid > div {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -78,7 +115,7 @@
 
 
     @media (min-width: 700px) {
-        .table {
+        .grid {
             grid-template-columns: 1fr 1fr;
         }
     }

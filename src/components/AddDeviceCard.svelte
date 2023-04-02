@@ -108,7 +108,6 @@
     }
 
     form {
-        box-sizing: border-box;
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -147,12 +146,6 @@
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-    }
-    
-    input {
-        background-color: var(--background-color);
-        border: 0;
-        border-radius: 5px;
     }
     
     .error {

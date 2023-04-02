@@ -7,7 +7,7 @@
 
     
     let title = "Foo";
-    let selectedTabIndex = 0;
+    let selectedTabIndex = 2;
 </script>
 
 <div id="page">
@@ -48,11 +48,8 @@
 
     main {
         width: 100%;
-        height: 100%;
         flex: 1;
-        overflow-y: scroll;  
-        scroll-snap-type: y mandatory;
-        scroll-padding-top: 20px;
+        overflow-y: scroll;
         display: flex;
         flex-direction: column;
         align-items: center;     

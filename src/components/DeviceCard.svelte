@@ -3,8 +3,8 @@
     import { createEventDispatcher } from "svelte";
 
     export let name = "Power Meter";
-    export let ip = "192.168.178.81";
-    let isOnline = false;
+    export let ip = "0.0.0.0";
+    let isOnline = true;
     let power = 132.89;
     const dispatchEvent = createEventDispatcher();
 </script>
@@ -20,16 +20,15 @@
     <a class="flex-column-center-all" href={`http://${ip}`} class:offline="{!isOnline}">
         <h2>{name}</h2>
         <span>{ip}</span>
-        <span class:power-offline={!isOnline} >{power} W</span>
+        <!-- <span class:power-offline={!isOnline} >{power} W</span> -->
     </a>  
-    <Switch width=50px height=25px/>
+    <!-- <Switch width=50px height=25px/> -->
 </section>
 
 <style>
     section {
-        box-sizing: border-box;
-        height: 150px;
-        min-height: 150px;
+        height: 100px;
+        min-height: 100px;
         overflow: hidden;
         display: flex;
         justify-content: space-between;
@@ -75,10 +74,6 @@
         }
     }
 
-    h2 {
-        margin: 0;
-    }
-
     button {
         display: flex;
         justify-content: center;
@@ -96,7 +91,7 @@
         height: 25%;
     }
 
-    .power-offline {
+    /* .power-offline {
         visibility: hidden;
-    }
+    } */
 </style>

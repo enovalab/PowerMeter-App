@@ -45,8 +45,6 @@
         height: 100%;
         flex: 1;
         overflow-y: scroll;  
-        scroll-snap-type: y mandatory;
-        scroll-padding-top: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;     

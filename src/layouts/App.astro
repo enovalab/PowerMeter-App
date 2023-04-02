@@ -38,14 +38,15 @@ import Header from "../components/Header.svelte";
     body {
         width: 100dvw;
         height: 100dvh;
-        height: ;
-        margin: 0;
-        padding: 0;
-        border: 0;
         font-family: "Dosis";
+        margin: 0;
         background-color: var(--background-color);
         user-select: none;
         color: var(--contrast-color);
+    }
+
+    :global(h1, h2, h3, h4, h5, h6) {
+        margin: 0;
     }
     
     :global(.bar) {
@@ -55,6 +56,8 @@ import Header from "../components/Header.svelte";
     }
 
     :global(.card) {
+        box-sizing: border-box;
+        flex-shrink: 0;
         background-color: var(--background-color-dark);
         width: min(90%, 1300px);
         max-width: min(90%, 1300px);
@@ -72,5 +75,21 @@ import Header from "../components/Header.svelte";
     :global(button) {
         border: 0;
         cursor: pointer;
+    }
+
+    :global(input) {
+        background-color: var(--background-color);
+        padding-left: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: 0;
+        border-radius: 5px;
+        color: var(--contrast-color);
+        font-family: "Dosis";
+    }
+
+    :global(input:focus) {
+        outline: none;
+        box-shadow: 0 0 5px var(--main-color);
     }
 </style>

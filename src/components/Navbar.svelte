@@ -91,7 +91,6 @@
 
     h1 {
         color: black;
-        margin: 0;
         padding-left: 20px;
         font-size: 1.5rem;
     }

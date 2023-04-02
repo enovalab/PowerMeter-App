@@ -52,6 +52,7 @@
                 ],
             },
             options: {
+                animation: false,
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
@@ -112,16 +113,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        scroll-snap-align: start;
     }
 
     .chart-container {
         height: 40vh;
         width: 90%;
-    }
-
-    h2 {
-        margin: 0;
     }
 
     .info {

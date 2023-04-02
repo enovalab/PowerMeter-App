@@ -1,6 +1,6 @@
 <script>
-    export let width = 50;
-    export let height = 25;
+    export let width = "50px";
+    export let height = "25px";
     export let borderRadius = "5px";
     export let isOn = false;
 </script>

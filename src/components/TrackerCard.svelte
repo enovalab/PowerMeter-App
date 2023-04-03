@@ -1,4 +1,5 @@
 <script>
+    import { addAlphaToRGB, averageArray } from "../modules/Helpers";
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
 
@@ -75,21 +76,6 @@
             },
         });    
     });
-    
-    function addAlphaToRGB(rgb, alpha) {
-        if (alpha < 0) {
-            alpha = 0;
-        } else if (alpha > 1) {
-            alpha = 1;
-        }
-        let colorArray = rgb.match(/\d+/g);
-        return `rgba(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}, ${alpha})`;
-    }
-
-    function averageArray(array) {
-        const sum = array.reduce((a, b) => a + b, 0);
-        return sum / array.length || 0;
-    }
 </script>
 
 <section class="card card-padding">

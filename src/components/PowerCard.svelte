@@ -1,5 +1,6 @@
 <script>
     import Switch from "./Switch.svelte";
+    import { callRestAPI } from "../modules/Helpers";
     import { onMount } from "svelte";
     
     let isOn = false;
@@ -23,31 +24,6 @@
         current: 0,
         powerFactor: 0
     };
-
-    async function callRestAPI(url, method = "GET", data) {
-        const options = {
-            method,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-
-        if(data) {
-            options.body = JSON.stringify(data);
-        }
-
-        try {
-            const response = await fetch(url, options);
-            if(!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return await response.json();
-        }
-        catch(error) {
-            console.error(error);
-        }
-        
-    }
 
     const baseURL = "http://192.168.178.153";
 

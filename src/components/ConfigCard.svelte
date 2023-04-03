@@ -1,43 +1,30 @@
 <script>
-    import AddDeviceCard from "./AddDeviceCard.svelte";
+    import { castTo } from "../modules/Helpers";
 
 
     export let title;
     export let fields = [];
     export let data = {};
     export let url = "";
-
-    fields.forEach(field => field.hasError = false);
+    let errors = {};
 
     $: {
         fields.forEach(field => {
-            if(field.inputType === "number" || field.inputType === "range") {
-                const numericValue = Number(data[field.key]);
-                if(isFinite(numericValue)) {
-                    data[field.key] = numericValue;
-                }
-            }
+            const value = data[field.key];
+            const castedValue = castTo(field.type, value);
+            if(castedValue === "undefined") return;
+            if(castedValue === undefined) return;
+            if(castedValue === null) return;
+            if(castedValue === NaN) return;
+            data[field.key] = castedValue;
         });
     }
     
-    function setInputType(node, field) {
-        node.type = field.inputType;
+    function setInputType(node, inputType) {
+        node.type = inputType;
     }
 
     function handleSubmit() {
-        for(let field of fields) {
-            if(field.validate) {
-                if(!field.validate(data[field.key])) {
-                    console.log(field.key + " added error");
-                    field = {...field, hasError: true};
-                    setTimeout(() => {
-                        
-                        console.log(field.key + " removed error");
-                    }, 1000);
-                    return;
-                }
-            }
-        }
         console.log(data);
     }
 </script>
@@ -48,11 +35,12 @@
         <div class="inputs">
             {#each fields as field}
                 <label for={field.key}>{field.label}</label>
-                <input 
-                    class:error={field.hasError} 
+                <input
+                    required={field.required}
+                    pattern={field.pattern}
+                    class:error={errors[field.key]} 
                     step=0.01
-                    use:setInputType={field}
-                    bind:this={field.inputElement} 
+                    use:setInputType={field.inputType}
                     bind:value={data[field.key]}
                 />  
             {/each}
@@ -88,19 +76,8 @@
         font-size: 22px;
     }
 
-    .error {
-        box-shadow: 0 0 20px var(--error-color);
-        position: relative;
-        animation: shake 0.1s 3;
-    }
-
-    @keyframes shake {
-        0% {
-            transform: translateX(0px);
-        }
-        100% {
-            transform: translateX(5px);
-        }
+    input:invalid {
+        box-shadow: 0 0 5px var(--error-color);
     }
 
     button {

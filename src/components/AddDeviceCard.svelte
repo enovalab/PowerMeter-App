@@ -64,7 +64,7 @@
 }}/>
 <form 
     class="card"
-    class:expanded="{isExpanded}"
+    class:expanded={isExpanded}
     on:click={expand}
     on:keydown={expand}
     on:submit|preventDefault={handleSubmit}

@@ -28,7 +28,7 @@
 </script>
 
 <AddDeviceCard on:add={handleAdd}/>
-<DeviceCard name="Power Meter AP" ip={"192.168.4.1"}/>
+<DeviceCard isSingleton={true} name="Power Meter AP" ip={"192.168.4.1"}/>
 {#key rerender}
     {#each deserialize() as device, i}
         <DeviceCard name={device.name} ip={device.ip} on:delete={() => handleDelete(i)}/>

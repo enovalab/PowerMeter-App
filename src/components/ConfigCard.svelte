@@ -1,8 +1,13 @@
 <script>
+    import AddDeviceCard from "./AddDeviceCard.svelte";
+
+
     export let title;
     export let fields = [];
     export let data = {};
-    export let url;
+    export let url = "";
+
+    fields.forEach(field => field.hasError = false);
 
     $: {
         fields.forEach(field => {
@@ -20,7 +25,20 @@
     }
 
     function handleSubmit() {
-        console.log(url);
+        for(let field of fields) {
+            if(field.validate) {
+                if(!field.validate(data[field.key])) {
+                    console.log(field.key + " added error");
+                    field = {...field, hasError: true};
+                    setTimeout(() => {
+                        
+                        console.log(field.key + " removed error");
+                    }, 1000);
+                    return;
+                }
+            }
+        }
+        console.log(data);
     }
 </script>
 
@@ -30,7 +48,13 @@
         <div class="inputs">
             {#each fields as field}
                 <label for={field.key}>{field.label}</label>
-                <input step=0.01 use:setInputType={field} bind:value={data[field.key]}/>
+                <input 
+                    class:error={field.hasError} 
+                    step=0.01
+                    use:setInputType={field}
+                    bind:this={field.inputElement} 
+                    bind:value={data[field.key]}
+                />  
             {/each}
         </div>
     </div>
@@ -62,6 +86,21 @@
 
     .inputs * {
         font-size: 22px;
+    }
+
+    .error {
+        box-shadow: 0 0 20px var(--error-color);
+        position: relative;
+        animation: shake 0.1s 3;
+    }
+
+    @keyframes shake {
+        0% {
+            transform: translateX(0px);
+        }
+        100% {
+            transform: translateX(5px);
+        }
     }
 
     button {

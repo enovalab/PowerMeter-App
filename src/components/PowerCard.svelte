@@ -1,8 +1,6 @@
 <script>
-    import Overview from "../pages/Overview.svelte";
     import Switch from "./Switch.svelte";
     import { onMount } from "svelte";
-    import { E } from "../../dist/_astro/Info.89e888bd";
     
     let isOn = false;
 
@@ -15,7 +13,9 @@
         {title: "Power Factor", unit: ""}
     ];
 
-    let power = {
+    export let border = false;
+
+    export let power = {
         active: 0,
         apparent: 0,
         reactive: 0,
@@ -62,7 +62,7 @@
     }
 </script>
 
-<div class="card">
+<div class="card" class:border>
     <div class="grid">
         {#each measurements as measurement, i}
             <div 

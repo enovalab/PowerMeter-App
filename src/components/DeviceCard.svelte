@@ -4,13 +4,14 @@
 
     export let name = "Power Meter";
     export let ip = "0.0.0.0";
+    export let isSingleton = false;
     let isOnline = true;
     let power = 132.89;
     const dispatchEvent = createEventDispatcher();
 </script>
 
-<section class="card">
-    <button on:click={() => {
+<section class="card" class:card-border={isSingleton}>
+    <button style:visibility={isSingleton ? "hidden" : "initial"} on:click={() => {
         if(confirm(`Are you sure you want to delete '${name}'?`)) {
             dispatchEvent("delete", name);
         }

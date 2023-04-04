@@ -3,16 +3,16 @@
 
     let isExpanded = false;
 
-    function expand() {
+    export function expand() {
         isExpanded = true;
     }
 
-    function collapse() {
+    export const collapse = () => {
         isExpanded = false;
     }
 </script>
 
-<div
+<section
     class="card"
     on:click={expand}
     on:keydown={expand}
@@ -22,8 +22,8 @@
             <slot name="expanded"></slot>
         </div>
         <div class="controls">
-            <div type="submit">
-                <slot name="submit"></slot>
+            <div type="action">
+                <slot name="action"></slot>
             </div>
             <div on:click|stopPropagation={collapse} on:keydown={collapse}>
                 <slot name="cancel"></slot>
@@ -34,7 +34,7 @@
             <slot name="collapsed"></slot>
         </div>
     {/if}
-</div>
+</section>
 
 <style>
     .card {

@@ -3,7 +3,7 @@
     import uuid from "@smakss/uuid";
     import { createEventDispatcher } from "svelte";
 
-    export const id = uuid();
+    export let id = uuid();
     export let fields = [];
     export let data = {};
 
@@ -19,8 +19,6 @@
         });
     }
 
-    const dispatchEvent = createEventDispatcher();
-
     function formTypeCast(type, value) {
         switch(type) {
             case "number" || "range": 
@@ -34,13 +32,14 @@
         }
     }
 
-    export function handleSubmit() {
-        console.log(data);
-        dispatchEvent("validSubmit", data);
+    const dispatchEvent = createEventDispatcher();
+
+    function handleSubmit(event) {
+        dispatchEvent("submit", data);
     }
 </script>
 
-<form id={id} on:submit on:submit|preventDefault={handleSubmit}>
+<form id={id} name={id} on:submit|preventDefault={handleSubmit}>
     {#each fields as field}
         <Field
             key={field.key}

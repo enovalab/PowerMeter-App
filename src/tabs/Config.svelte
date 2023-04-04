@@ -1,8 +1,12 @@
 <script>
-    import ConfigCard from "../components/ConfigCard.svelte";
+    import FormCard from "../components/FormCard.svelte";
+    
+    function handleSubmit(event) {
+        console.log(event);
+    }
 </script>
 
-<ConfigCard title="WiFi Stationary" on:submit={console.log} fields={[
+<FormCard title="WiFi Stationary" on:submit={handleSubmit} fields={[
     {
         key: "ssid",
         type: "string",
@@ -36,7 +40,8 @@
         label: "Subnetmask"
     }
 ]}/>
-<ConfigCard title="WiFi Acesspoint" fields={[
+
+<FormCard title="WiFi Acesspoint" fields={[
     {
         key: "ssid",
         type: "string",
@@ -51,7 +56,7 @@
     }
 ]}/>
 
-<ConfigCard title="Measuring Calibration" fields={[
+<FormCard title="Measuring Calibration" fields={[
     {
         key: "voltage",
         type: "number",

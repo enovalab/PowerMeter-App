@@ -15,16 +15,13 @@ export function averageArray(array) {
 }
 
 
-export function castTo(type, value) {
+export function inputTypeCast(type, value) {
     switch(type) {
-        case "string": 
-            return String(value);
         case "number":
             return Number(value);
-        case "boolean":
+        case "checkbox":
+            console.log(Boolean(value));
             return Boolean(value);
-        case "string":
-            return String(value);
         default: 
             return value;
     }

@@ -1,6 +1,5 @@
 <script>
     import ConfigCard from "../components/ConfigCard.svelte";
-
 </script>
 
 <ConfigCard title="WiFi Stationary" on:submit={console.log} fields={[
@@ -68,10 +67,7 @@
     {
         key: "phase",
         type: "number",
-        inputType: "number",
+        inputType: "checkbox",
         label: "Phase"
     },
 ]}/>
-
-<style>
-</style>

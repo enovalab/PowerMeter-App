@@ -18,19 +18,19 @@
     on:keydown={expand}
 >
     {#if isExpanded}
-        <div class="flex">
-            <button type="submit">
-                <slot name="submit"></slot>
-            </button>
-            <button on:click|stopPropagation={collapse}>
-                <slot name="cancel"></slot>
-            </button>
-        </div>
-        <div class="content expanded">
+        <div class="content">
             <slot name="expanded"></slot>
         </div>
+        <div class="controls">
+            <div type="submit">
+                <slot name="submit"></slot>
+            </div>
+            <div on:click|stopPropagation={collapse} on:keydown={collapse}>
+                <slot name="cancel"></slot>
+            </div>
+        </div>
     {:else}
-        <div class="content">
+        <div class="content collapsed">
             <slot name="collapsed"></slot>
         </div>
     {/if}
@@ -40,7 +40,7 @@
     .card {
         min-height: 50px;
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         justify-content: space-between;
         overflow: hidden;
     }
@@ -49,7 +49,13 @@
         padding: 20px
     }
     
-    .flex {
+    .collapsed {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .controls {
         width: 100%;
         height: 40px;
         display: flex;
@@ -57,12 +63,11 @@
         justify-content: space-between;
     }
 
-    button {
+    .controls div {
         flex: 1;
-        background-color: var(--main-color);
     }
 
-    button:nth-of-type(2) {
+    .controls div:nth-of-type(2) {
         border-right: 1px solid var(--background-color-dark);
     }
 </style>

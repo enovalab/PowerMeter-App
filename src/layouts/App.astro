@@ -28,11 +28,11 @@ import Header from "../components/Header.svelte";
     :root {
         --main-color: rgb(0, 208, 255);
         --accent-color: rgb(143, 234, 255);
-        --background-color: rgb(32, 32, 32);
-        --background-color-dark: rgb(24, 24, 24);
+        --background-color: rgb(38, 38, 38);
+        --background-color-dark: rgb(16, 16, 16);
         --contrast-color: rgb(255, 255, 255);
         --inactive-color: rgb(86, 86, 86); 
-        --error-color: rgb(255, 60, 0);
+        --error-color: rgb(255, 133, 85);
     }
     
     body {
@@ -47,6 +47,7 @@ import Header from "../components/Header.svelte";
 
     :global(h1, h2, h3, h4, h5, h6) {
         margin: 0;
+        text-align: center;
     }
     
     :global(.bar) {
@@ -58,6 +59,7 @@ import Header from "../components/Header.svelte";
     :global(.card) {
         box-sizing: border-box;
         flex-shrink: 0;
+        overflow: hidden;
         background-color: var(--background-color-dark);
         width: min(90%, 1300px);
         max-width: min(90%, 1300px);
@@ -77,6 +79,7 @@ import Header from "../components/Header.svelte";
     }
 
     :global(button) {
+        font-family: "Dosis";
         background-color: var(--main-color);
         border: 0;
         cursor: pointer;

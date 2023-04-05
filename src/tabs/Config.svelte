@@ -1,78 +1,76 @@
 <script>
     import FormCard from "../components/FormCard.svelte";
-    
-    function handleSubmit(event) {
-        console.log(event);
-    }
+    const ipPattern = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 </script>
 
-<FormCard title="WiFi Stationary" on:submit={handleSubmit} fields={[
+<FormCard title="WiFi Stationary" url="" fields={[
     {
         key: "ssid",
-        type: "string",
-        inputType: "text",
+        type: "text",
         label: "SSID",
         required: true
     },
     {
         key: "password",
-        type: "string",
-        inputType: "password",
-        label: "Password"
+        type: "password",
+        label: "Password",
+        required: true
     },
     {
         key: "staticIP",
-        type: "string",
-        inputType: "text",
+        type: "text",
         label: "Static IP",
-        pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+        pattern: ipPattern.source
     },
     {
         key: "gateway",
-        type: "string",
-        inputType: "text",
-        label: "Gateway"
+        type: "text",
+        label: "Gateway",
+        pattern: ipPattern.source
     },
     {
         key: "subnet",
-        type: "string",
-        inputType: "text",
-        label: "Subnetmask"
+        type: "text",
+        label: "Subnetmask",
+        pattern: ipPattern.source
     }
 ]}/>
 
-<FormCard title="WiFi Acesspoint" fields={[
+<FormCard title="WiFi Acesspoint" url="" fields={[
     {
         key: "ssid",
-        type: "string",
-        inputType: "text",
-        label: "SSID"
+        type: "text",
+        label: "SSID",
+        required: true
     },
     {
         key: "password",
-        type: "string",
-        inputType: "password",
-        label: "Password"
+        type: "password",
+        label: "Password",
+        required: true
     }
 ]}/>
 
-<FormCard title="Measuring Calibration" fields={[
+<FormCard title="Measuring Calibration" url="" fields={[
     {
         key: "voltage",
         type: "number",
-        inputType: "number",
-        label: "Voltage"
+        label: "Voltage",
+        required: true,
+        step: 0.01
     },
     {
         key: "current",
         type: "number",
-        inputType: "number",
-        label: "Current"
+        label: "Current",
+        required: true,
+        step: 0.01
     },
     {
         key: "phase",
         type: "number",
-        inputType: "checkbox",
-        label: "Phase"
+        label: "Phase",
+        required: true,
+        step: 0.01
     },
 ]}/>

@@ -50,7 +50,9 @@
             </div>
         {/each}
     </div>
-    <Switch width=200px height=100px borderRadius=20px bind:isOn on:click={handleSwitchClick}/>
+    <div class="switch">
+        <Switch width=200px height=100px borderRadius=20px bind:isOn on:click={handleSwitchClick}/>
+    </div>
 </div>
 
 <style>
@@ -88,7 +90,6 @@
     span {
         font-size: 30px;
     }
-
 
     @media (min-width: 700px) {
         .grid {

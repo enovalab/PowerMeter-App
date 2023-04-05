@@ -1,73 +1,67 @@
 <script>
-    import Switch from "./Switch.svelte";
-
     let isExpanded = false;
+    let contentElement;
 
-    export function expand() {
-        isExpanded = true;
+    $: {
+        if(contentElement) {
+            const height = contentElement.scrollHeight;
+            contentElement.style.transition = "";
+
+            if(!isExpanded) {
+                contentElement.style.height = "0";
+            }
+            else {
+                contentElement.style.height = height + "px";
+            }
+        }
     }
 
-    export const collapse = () => {
-        isExpanded = false;
+    function toggle() {
+        isExpanded = !isExpanded;
     }
 </script>
 
-<section
-    class="card"
-    on:click={expand}
-    on:keydown={expand}
->
-    {#if isExpanded}
-        <div class="content">
-            <slot name="expanded"></slot>
+<section class="card" class:expanded={isExpanded}>
+    <div class="head" on:click={toggle} on:keydown={toggle}>
+        <div class="preview">
+            <slot name="preview"></slot>
         </div>
-        <div class="controls">
-            <div type="action">
-                <slot name="action"></slot>
-            </div>
-            <div on:click|stopPropagation={collapse} on:keydown={collapse}>
-                <slot name="cancel"></slot>
-            </div>
-        </div>
-    {:else}
-        <div class="content collapsed">
-            <slot name="collapsed"></slot>
-        </div>
-    {/if}
+        <img class:expanded={isExpanded} src="../icons/expand_circle_down_black_24dp.svg" alt="">
+    </div>
+    <div class="content" class:expanded={isExpanded} bind:this={contentElement}>
+        <slot name="content"></slot>
+    </div>
 </section>
 
 <style>
-    .card {
-        min-height: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow: hidden;
-    }
-    
-    .content {
-        padding: 20px
-    }
-    
-    .collapsed {
-        display: flex;
-        justify-content: center;
+    .head {
+        background-color: var(--main-color);
+        cursor: pointer;
+        display: grid;
+        justify-items: center;
         align-items: center;
+        grid-template-columns: 50px 1fr 50px;
     }
 
-    .controls {
-        width: 100%;
+    .content {
+        transition: height 0.7s;
+    }
+
+    .preview {
+        align-self: center;
+        grid-column-start: 2;
+    }
+
+
+    img {
+        grid-column-start: 3;
         height: 40px;
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: space-between;
+        margin: 5px;
+        transform: rotate(90deg);
+        transition: transform 0.7s;
     }
-
-    .controls div {
-        flex: 1;
-    }
-
-    .controls div:nth-of-type(2) {
-        border-right: 1px solid var(--background-color-dark);
+    
+    img.expanded {
+        transform: rotate(0deg);
     }
 </style>

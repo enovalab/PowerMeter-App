@@ -2,6 +2,7 @@
     import { addAlphaToRGB, averageArray } from "../modules/Helpers";
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
+    import uuid from "@smakss/uuid";
 
     export let title;
     export let dataColor;
@@ -30,7 +31,7 @@
     $: averagePower = averageArray(data).toFixed(3);
     $: energy = ((averagePower * data.length * secondsBetweenSamples) / 3.6e+6).toFixed(3);
     
-    const chartID = Math.random().toString(36).slice(2, 7);    
+    const chartID = uuid();    
     let chart;
     
     onMount(() => {

@@ -5,16 +5,44 @@
     export let type = "text";
     export let required = false;
     export let pattern = null;
-    export let step = 0.01;
+    export let step;
     let error = false;
+
+    $: {
+        const castedValue = inputTypeCast(type, value);
+        if(castedValue !== "undefined") {
+            value = castedValue;
+        }
+    }
+
+    $: {
+        if(typeof(value) === "number") {
+            value = Math.round(value / step) * step;
+        }
+    }
+
+    function inputTypeCast(type, value) {
+        switch(type) {
+            case "number" || "range": 
+                return Number(value);
+            case "text":
+                return String(value);
+            case "checkbox":
+                return Boolean(value);
+            default:
+                return value;
+        }
+    }
 
     function setInputType(node, type) {
         node.type = type;
     }
 </script>
 
-<label for={key}>{label}</label>
-{#if (type == "checkbox")}
+<label for={key}>
+    {label} {#if required}*{/if}
+</label>
+{#if (type === "checkbox")}
     <input
         name={key}
         required={required}

@@ -28,7 +28,7 @@ export function inputTypeCast(type, value) {
 }
 
 
-export async function callRestAPI(url, method = "GET", data) {
+export async function callRestAPI(url, method = "GET", requestData) {
     const options = {
         method,
         headers: {
@@ -36,13 +36,19 @@ export async function callRestAPI(url, method = "GET", data) {
         }
     }
 
-    if(data) {
-        options.body = JSON.stringify(data);
+    if(requestData) {
+        options.body = JSON.stringify(requestData);
     }
 
     const response = await fetch(url, options);
+    const responseData = await response.json();
+
     if(!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        if(responseData.error) {
+            errorMessage += `message: ${responseData.error}`;
+        }
+        throw new Error(errorMessage);
     }
-    return await response.json();    
+    return responseData;
 }

@@ -1,68 +1,46 @@
 <script>
     import Field from "./Field.svelte";
     import uuid from "@smakss/uuid";
-    import { createEventDispatcher } from "svelte";
 
     export let id = uuid();
     export let fields = [];
     export let data = {};
-
-    $: {
-        fields.forEach(field => {
-            const value = data[field.key];
-            const castedValue = formTypeCast(field.type, value);
-            if(castedValue === "undefined") return;
-            if(castedValue === undefined) return;
-            if(castedValue === null) return;
-            if(castedValue === NaN) return;
-            data[field.key] = castedValue;
-        });
-    }
-
-    function formTypeCast(type, value) {
-        switch(type) {
-            case "number" || "range": 
-                return Number(value);
-            case "text":
-                return String(value);
-            case "checkbox":
-                return Boolean(value);
-            default:
-                return value;
-        }
-    }
-
-    const dispatchEvent = createEventDispatcher();
-
-    function handleSubmit(event) {
-        dispatchEvent("submit", data);
-    }
 </script>
 
-<form id={id} name={id} on:submit|preventDefault={handleSubmit}>
-    {#each fields as field}
-        <Field
-            key={field.key}
-            label={field.label}
-            type={field.type}
-            required={field.required}
-            pattern={field.pattern}
-            step={field.step}
-            bind:value={data[field.key]}
-        />
-    {/each}
-    <button type="submit" style:display="none">
+<form id={id} name={id} on:submit|preventDefault>
+    <div>
+        {#each fields as field}
+            <Field
+                key={field.key}
+                label={field.label}
+                type={field.type}
+                required={field.required}
+                pattern={field.pattern}
+                step={field.step}
+                bind:value={data[field.key]}
+            />
+        {/each}
+    </div>
+    <button type="submit" form={id}>
+        <slot></slot>
+    </button>
 </form>
 
 <style>
-    form {
+    div {
+        padding: 20px;
         display: grid;
         grid-row-gap: 10px;
         grid-template-columns: 1fr;
     }
 
+    button {
+        width: 100%;
+        height:40px;
+    }
+
     @media (min-width: 700px) {
-        form {
+        div {
             grid-template-columns: 300px calc(100% - 300px);
         }
     }

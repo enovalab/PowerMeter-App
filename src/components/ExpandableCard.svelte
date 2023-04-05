@@ -1,20 +1,20 @@
 <script>
-    let isExpanded = false;
+    export let showIcon = true;
+    export let isExpanded = false;
     let contentElement;
 
-    $: {
-        if(contentElement) {
-            const height = contentElement.scrollHeight;
-            contentElement.style.transition = "";
+    $: if(contentElement) {
+        const height = contentElement.scrollHeight;
+        contentElement.style.transition = "";
 
-            if(!isExpanded) {
-                contentElement.style.height = "0";
-            }
-            else {
-                contentElement.style.height = height + "px";
-            }
+        if(!isExpanded) {
+            contentElement.style.height = "0";
+        }
+        else {
+            contentElement.style.height = height + "px";
         }
     }
+
 
     function toggle() {
         isExpanded = !isExpanded;
@@ -26,7 +26,9 @@
         <div class="preview">
             <slot name="preview"></slot>
         </div>
-        <img class:expanded={isExpanded} src="../icons/expand_circle_down_black_24dp.svg" alt="">
+        {#if showIcon}
+            <img class:expanded={isExpanded} src="../icons/expand_circle_down_black_24dp.svg" alt="">
+        {/if}
     </div>
     <div class="content" class:expanded={isExpanded} bind:this={contentElement}>
         <slot name="content"></slot>
@@ -35,6 +37,8 @@
 
 <style>
     .head {
+        padding: 5px;
+        min-height: 40px;
         background-color: var(--main-color);
         cursor: pointer;
         display: grid;
@@ -56,7 +60,6 @@
     img {
         grid-column-start: 3;
         height: 40px;
-        margin: 5px;
         transform: rotate(90deg);
         transition: transform 0.7s;
     }

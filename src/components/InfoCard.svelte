@@ -1,11 +1,10 @@
-<div class="card">
+<div class="card card-padding">
     <slot></slot>
 </div>
 
 <style>
     .card {
         font-size: 15px;
-        padding: 20px;
         display: grid;
         grid-template-columns: 1fr 1fr;
         row-gap: 10px;

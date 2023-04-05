@@ -1,6 +1,6 @@
 <script>
     import DeviceCard from "../components/DeviceCard.svelte";
-    import AddDeviceCard from "../components/AddDeviceCard.svelte";    
+    import AddDeviceCard from "../components/AddDeviceCard.svelte";
 
     let rerender = true;
     function deserialize() {

@@ -8,7 +8,7 @@
 </script>
 
 <form id={id} name={id} on:submit|preventDefault>
-    <div>
+    <div class="card-padding">
         {#each fields as field}
             <Field
                 key={field.key}
@@ -28,7 +28,6 @@
 
 <style>
     div {
-        padding: 20px;
         display: grid;
         grid-row-gap: 10px;
         grid-template-columns: 1fr;

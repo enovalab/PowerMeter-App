@@ -5,7 +5,7 @@
     import Config from "../tabs/Config.svelte";
     import Info from "../tabs/Info.svelte";
 
-    let selectedTabIndex = 2;
+    let selectedTabIndex = 0;
 </script>
 
 <div id="page">

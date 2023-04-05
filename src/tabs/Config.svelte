@@ -1,6 +1,6 @@
 <script>
     import FormCard from "../components/FormCard.svelte";
-    const ipPattern = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    import { ipPattern } from "../modules/Helpers";
 </script>
 
 <FormCard title="WiFi Stationary" url="" fields={[

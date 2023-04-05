@@ -1,11 +1,8 @@
 <script>
-    import Switch from "./Switch.svelte";
     import { callRestAPI } from "../modules/Helpers";
     import { onMount } from "svelte";
     
-    let isOn = false;
-
-    const measurements = [
+    export let measurements = [
         {title: "Active Power", unit: "W"},
         {title: "Apparent Power", unit: "VA"},
         {title: "Reactive Power", unit: "var"},
@@ -13,7 +10,8 @@
         {title: "Current", unit: "A"},
         {title: "Power Factor", unit: ""}
     ];
-
+    
+    export let isOn = false;
     export let border = false;
 
     export let power = {
@@ -25,20 +23,9 @@
         powerFactor: 0
     };
 
-    const baseURL = "http://192.168.178.153";
-
-    onMount(async () => {
-        const response = await callRestAPI(`${baseURL}/api/config/relay`);
-        isOn = response.state;
-    });
-
-    async function handleSwitchClick() {
-        const response =  await callRestAPI(`${baseURL}/api/config/relay`, "PATCH", {state: isOn});
-        isOn = response.state;
-    }
 </script>
 
-<div class="card" class:border>
+<div class="card card-padding" class:border>
     <div class="grid">
         {#each measurements as measurement, i}
             <div 
@@ -50,9 +37,6 @@
             </div>
         {/each}
     </div>
-    <div class="switch">
-        <Switch width=200px height=100px borderRadius=20px bind:isOn on:click={handleSwitchClick}/>
-    </div>
 </div>
 
 <style>
@@ -60,7 +44,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 20px;
     }
 
     .grid {

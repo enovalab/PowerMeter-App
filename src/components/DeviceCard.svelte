@@ -10,8 +10,8 @@
     const dispatchEvent = createEventDispatcher();
 </script>
 
-<section class="card" class:card-border={isSingleton}>
-    <button style:visibility={isSingleton ? "hidden" : "initial"} on:click={() => {
+<section class="card">
+    <button class:singleton={isSingleton} on:click={() => {
         if(confirm(`Are you sure you want to delete '${name}'?`)) {
             dispatchEvent("delete", name);
         }
@@ -82,6 +82,10 @@
         height: 100%;
         width: clamp(30px, 10%, 60px);
         background-color: var(--main-color);
+    }
+
+    button.singleton {
+        visibility: hidden;
     }
 
     button:active {

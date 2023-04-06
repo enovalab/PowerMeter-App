@@ -11,8 +11,7 @@
         {title: "Power Factor", unit: ""}
     ];
     
-    export let isOn = false;
-    export let border = false;
+    export let isOn;
 
     export let power = {
         active: 0,
@@ -25,7 +24,7 @@
 
 </script>
 
-<div class="card card-padding" class:border>
+<div class="card card-padding">
     <div class="grid">
         {#each measurements as measurement, i}
             <div 
@@ -48,14 +47,12 @@
 
     .grid {
         width: 100%;
-        margin-bottom: 50px;
         display: grid;
         grid-template-columns: 100%;
         column-gap: 20px;
         row-gap: 20px;
     }
 
-    
     .grid > div {
         display: flex;
         flex-direction: column;

@@ -4,7 +4,6 @@
     import Tracker from "../tabs/Tracker.svelte";
     import Config from "../tabs/Config.svelte";
     import Info from "../tabs/Info.svelte";
-    import { onMount } from "svelte";
     import { getDeviceUrl } from "../modules/Helpers";
 
     let selectedTabIndex = 0;    

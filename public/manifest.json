@@ -6,7 +6,7 @@
     "categories": ["iot", "smarthome"],
     "display": "standalone",
     "scope": "/",
-    "start_url": "/",
+    "start_url": "https://enovalab.github.io/PowerMeter-App/",
     "background_color": "rgb(86, 86, 86)",
     "theme_color": "rgb(86, 86, 86)",
     "icons": [

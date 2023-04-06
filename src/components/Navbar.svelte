@@ -4,7 +4,8 @@
     export let tabs = []; 
     export let selectedIndex = 0;
     export let title = "";
-    $: {title = tabs[selectedIndex].title}
+
+    $: title = tabs[selectedIndex].title;
 
     const dispatchEvent = createEventDispatcher();
     
@@ -39,10 +40,10 @@
 
 <header class="bar">
     <h1>{title}</h1>
+    <slot name="header"></slot>
 </header>
 <slot></slot>
-<nav class="bar" on:mousewheel={handleMouseWheel}
->
+<nav class="bar" on:mousewheel={handleMouseWheel}>
     {#each tabs as tab, i}
         <button
             on:click={() => {
@@ -83,16 +84,21 @@
     }
 
     header {
+        box-sizing: border-box;
+        padding-left: 20px;
+        padding-right: 20px;
+        /* padding-top: 5px;
+        padding-bottom: 5px; */
         width: 100vw;
         height: 40px;
         display: flex;
+        justify-content: space-between;
         align-items: center;
     }
 
     h1 {
         color: black;
-        padding-left: 20px;
-        font-size: 1.5rem;
+        font-size: 25px;
     }
 
     img {

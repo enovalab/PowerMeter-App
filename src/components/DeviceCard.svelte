@@ -7,27 +7,37 @@
     export let isSingleton = false;
     let isOnline = true;
     let power = 132.89;
-    const dispatchEvent = createEventDispatcher();
-</script>
 
-<section class="card">
-    <button class:singleton={isSingleton} on:click={() => {
+    const url = new URL("/PowerMeter-App/Device", window.location.href);
+    url.searchParams.set("ip", ip);
+    console.log(url.href);
+
+    const dispatchEvent = createEventDispatcher();
+
+    function handleDeleteClick() {
         if(confirm(`Are you sure you want to delete '${name}'?`)) {
             dispatchEvent("delete", name);
         }
-    }}>
+    }
+
+    function handleDeviceClick() {
+    }
+</script>
+
+<section class="card">
+    <button class:singleton={isSingleton} on:click={handleDeleteClick}>
         <img src="../icons/delete_black_24dp.svg" alt="delete">
     </button>
-    <a class="flex-column-center-all" href={`http://${ip}`} class:offline="{!isOnline}">
+    <a class="flex-column-center-all" href={url.href} class:offline="{!isOnline}" on:click={handleDeviceClick}>
         <h2>{name}</h2>
         <span>{ip}</span>
-        <!-- <span class:power-offline={!isOnline} >{power} W</span> -->
+        <!-- <span class:power-offline={!isOnline}>{power} W</span> -->
     </a>  
     <!-- <Switch width=50px height=25px/> -->
 </section>
 
 <style>
-    section {
+    .card {
         height: 100px;
         min-height: 100px;
         overflow: hidden;

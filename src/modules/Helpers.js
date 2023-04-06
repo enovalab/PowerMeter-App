@@ -29,6 +29,13 @@ export function inputTypeCast(type, value) {
     }
 }
 
+export function getDeviceIp() {
+    return new URL(window.location.href).searchParams.get("ip");
+}
+
+export function getDeviceUrl() {
+    return `http://${getDeviceIp()}`;
+}
 
 export async function callRestAPI(url, method = "GET", requestData) {
     const options = {

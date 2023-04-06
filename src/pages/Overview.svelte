@@ -3,13 +3,11 @@
     import Devices from "../tabs/Devices.svelte";
     import Tracker from "../tabs/Tracker.svelte";
     import Info from "../tabs/Info.svelte";
-
     
-    let title = "Foo";
     let selectedTabIndex = 0;
 </script>
 
-<div id="page">
+<div class="page">
     <Navbar bind:selectedIndex={selectedTabIndex} tabs = {[
         {title: "Devices", icon: "../icons/view_list_black_24dp.svg"},
         {title: "Tracker", icon: "../icons/query_stats_black_24dp.svg"},
@@ -32,7 +30,7 @@
 </div>
 
 <style>
-    #page {
+    .page {
         width: 100%;
         height: 100%;
         display: flex;

@@ -7,7 +7,7 @@
     let data = {};
     let isExpanded = false;
 
-    function handleSubmit(event) {
+    function handleSubmit() {
         console.log(data);
         isExpanded = false;
     }

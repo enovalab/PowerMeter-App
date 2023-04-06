@@ -5,5 +5,5 @@
     let isOn;
 </script>
 
-<PowerCard bind:isOn={isOn}/>
 <SwitchCard bind:isOn={isOn}/>
+<PowerCard bind:isOn={isOn}/>

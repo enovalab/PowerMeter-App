@@ -24,7 +24,7 @@
             <a href={getDeviceUrl() + "/update"}>
                 <img src="../icons/upgrade_black_24dp.svg" alt="">
             </a>
-            <a href="/PowerMeter-App/">
+            <a href="/">
                 <img src="../icons/home_black_24dp.svg" alt="">
             </a>
         </div>

@@ -8,7 +8,7 @@
     let isOnline = true;
     let power = 132.89;
 
-    const url = new URL("/PowerMeter-App/Device", window.location.href);
+    const url = new URL("/Device", window.location.href);
     url.searchParams.set("ip", ip);
     console.log(url.href);
 

@@ -5,8 +5,8 @@
     "description": "Monitor and control your power consumption",
     "categories": ["iot", "smarthome"],
     "display": "standalone",
-    "scope": "https://enovalab.github.io/PowerMeter-App/",
-    "start_url": "https://enovalab.github.io/PowerMeter-App/",
+    "scope": "/",
+    "start_url": "/",
     "background_color": "rgb(86, 86, 86)",
     "theme_color": "rgb(86, 86, 86)",
     "icons": [

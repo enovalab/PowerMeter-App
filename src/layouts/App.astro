@@ -5,7 +5,7 @@ import Header from "../components/Header.svelte";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="manifest" href="../manifest.json"/>
     <link rel="shortcut icon" href="../icons/bolt_blue_24dp.svg" type="image/x-icon">
     <title>Power Meter</title>
@@ -36,8 +36,8 @@ import Header from "../components/Header.svelte";
     }
     
     body {
-        width: 100vw;
-        height: 100vh;
+        width: 100dvw;
+        height: 100svh;
         font-family: "Dosis";
         margin: 0;
         background-color: var(--background-color);

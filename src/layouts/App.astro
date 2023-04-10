@@ -1,13 +1,12 @@
----
-import Header from "../components/Header.svelte";
----
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="description" content="Monitor and control your power consumption">
+    <meta name="theme-color" content="rgb(0, 208, 255)">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="manifest" href="../manifest.json"/>
-    <link rel="shortcut icon" href="../icons/bolt_blue_24dp.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../icons/bolt_blue.png" type="image/x-icon">
     <title>Power Meter</title>
 </head>
 <body>
@@ -24,6 +23,30 @@ import Header from "../components/Header.svelte";
         src: url("../fonts/Dosis.woff2") format("woff2");
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
+
+    @font-face {
+        font-family: "Material Icons Round";
+        font-style: normal;
+        font-weight: 400;
+        src: url("../fonts/MaterialIconsRound.woff2") format("woff2");
+    }
+
+    :global(.material-icons-round) {
+        font-family: "Material Icons Round";
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
+        font-size: 30px;
+        color: black;
+    }
     
     :root {
         --main-color: rgb(0, 208, 255);
@@ -36,7 +59,8 @@ import Header from "../components/Header.svelte";
     }
     
     body {
-        width: 100dvw;
+        width: 100vw;
+        height: 100vh;
         height: 100svh;
         font-family: "Dosis";
         margin: 0;
@@ -80,23 +104,11 @@ import Header from "../components/Header.svelte";
         cursor: pointer;
     }
 
-    :global(input) {
-        background-color: var(--background-color);
-        padding-left: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        border: 0;
-        border-radius: 5px;
+    :global(a) {
         color: var(--contrast-color);
-        font-family: "Dosis";
     }
 
-    :global(input:invalid) {
-        box-shadow: 0 0 5px var(--error-color);
-    }
-
-    :global(input:focus) {
-        outline: none;
-        box-shadow: 0 0 5px var(--main-color);
+    :global(a:link, a:visited, a:hover, a:active) {
+        text-decoration: none;
     }
 </style>

@@ -17,7 +17,7 @@
 </script>
 
 <ExpandableCard showIcon={false} bind:isExpanded={isExpanded}>
-    <img slot="preview" class="preview" src="../icons/add_black_24dp.svg" alt="">
+    <span slot="preview" class="material-icons-round">add</span>
     <div slot="content">
         <Form on:submit={handleSubmit}  bind:data={data} fields={[
             {
@@ -34,17 +34,14 @@
                 pattern: ipPattern.source
             }
         ]}>
-            <img src="../icons/done_black_24dp.svg" alt="">
+            <span class="material-icons-round">done</span>
         </Form>
     </div>
 </ExpandableCard>
 
 <style>
-    .preview {
-        height: 50px;
+    span[slot="preview"] {
+        font-size: 45px;
     }
-
-    img {
-        height: 30px;
-    }
+    
 </style>

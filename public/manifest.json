@@ -8,11 +8,11 @@
     "scope": "/",
     "start_url": "/",
     "background_color": "rgb(86, 86, 86)",
-    "theme_color": "rgb(86, 86, 86)",
+    "theme_color": "rgb(0, 208, 255)",
     "icons": [
         {
-            "src": "icons/bolt_blue_24dp.svg",
-            "type": "image/svg+xml",
+            "src": "icons/bolt_blue.png",
+            "type": "image/png",
             "sizes": "any"
         }
     ]

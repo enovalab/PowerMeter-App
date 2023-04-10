@@ -4,28 +4,24 @@
     import Tracker from "../tabs/Tracker.svelte";
     import Config from "../tabs/Config.svelte";
     import Info from "../tabs/Info.svelte";
-    import { getDeviceUrl } from "../modules/Helpers";
+    import { getDeviceURL } from "../modules/Helpers";
 
-    let selectedTabIndex = 0;    
-    
-    function handleUpdateClick() {
-        
-    }
+    let selectedTabIndex = 0;
 </script>
 
 <div class="page">
     <Navbar bind:selectedIndex={selectedTabIndex} tabs = {[
-        {title: "Power", icon: "../icons/power_black_24dp.svg"},
-        {title: "Tracker", icon: "../icons/query_stats_black_24dp.svg"},
-        {title: "Config", icon: "../icons/construction_black_24dp.svg"},
-        {title: "Info", icon: "../icons/info_outline_black_24dp.svg"}
+        {title: "Power", icon: "power"},
+        {title: "Tracker", icon: "query_stats"},
+        {title: "Config", icon: "construction"},
+        {title: "Info", icon: "info_outline"}
     ]}>
         <div slot="header">
-            <a href={getDeviceUrl() + "/update"}>
-                <img src="../icons/upgrade_black_24dp.svg" alt="">
+            <a href={getDeviceURL() + "/update"}>
+                <span class="material-icons-round">update</span>
             </a>
             <a href="/">
-                <img src="../icons/home_black_24dp.svg" alt="">
+                <span class="material-icons-round">view_list</span>
             </a>
         </div>
         <main>
@@ -71,9 +67,12 @@
         align-items: center;
     }
 
-    img {
+    a {
         display: flex;
-        height: 30px;
-        margin-right: 30px;
+        align-items: center;
+    }
+
+    .material-icons-round {
+        margin-left: 20px;
     }
 </style>

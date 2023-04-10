@@ -13,7 +13,9 @@
 		"@astrojs/svelte": "^2.0.2",
 		"@smakss/uuid": "^1.2.6",
 		"astro": "^2.0.12",
+		"astrojs-service-worker": "^1.0.0",
 		"chart.js": "^4.2.1",
-		"svelte": "^3.55.1"
+		"svelte": "^3.55.1",
+		"svelte-local-storage-store": "^0.4.0"
 	}
 }

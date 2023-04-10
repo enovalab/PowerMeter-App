@@ -68,4 +68,23 @@
     * {
         font-size: 22px;
     }
+
+    input {
+        background-color: var(--background-color);
+        padding-left: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: 0;
+        border-radius: 5px;
+        color: var(--contrast-color);
+        font-family: "Dosis";
+    }
+
+    input:invalid {
+        border: 1px solid var(--error-color);
+    }
+
+    input:focus {
+        outline: none;
+    }
 </style>

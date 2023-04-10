@@ -1,9 +1,9 @@
 <script>
-    import FormCard from "../components/FormCard.svelte";
+    import ConfigCard from "../components/ConfigCard.svelte";
     import { ipPattern } from "../modules/Helpers";
 </script>
 
-<FormCard title="WiFi Stationary" url="" fields={[
+<ConfigCard title="WiFi Stationary" url="" fields={[
     {
         key: "ssid",
         type: "text",
@@ -36,7 +36,7 @@
     }
 ]}/>
 
-<FormCard title="WiFi Acesspoint" url="" fields={[
+<ConfigCard title="WiFi Acesspoint" url="" fields={[
     {
         key: "ssid",
         type: "text",
@@ -51,7 +51,7 @@
     }
 ]}/>
 
-<FormCard title="Measuring Calibration" url="" fields={[
+<ConfigCard title="Measuring Calibration" url="" fields={[
     {
         key: "voltage",
         type: "number",

@@ -10,6 +10,36 @@ export function addAlphaToRGB(rgb, alpha) {
     return `rgba(${colorArray[0]}, ${colorArray[1]}, ${colorArray[2]}, ${alpha})`;
 }
 
+export function formatDuration(milliseconds) {
+    let seconds = Math.floor(milliseconds / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
+    seconds %= 60;
+    minutes %= 60;
+    hours %= 24;
+
+    let duration = [];
+    if (days > 0) {
+        duration.push(`${days}d`);
+    }
+    if (hours > 0) {
+        duration.push(`${hours}h`);
+    }
+    if (minutes > 0) {
+        duration.push(`${minutes}min`);
+    }
+    if (seconds > 0) {
+        duration.push(`${seconds}s`);
+    }
+
+    return duration.join(" ");
+}
+  
+
+export function roundToStep(num, step) {
+    return Math.ceil(num / step) * step;
+}
 
 export function averageArray(array) {
     const sum = array.reduce((a, b) => a + b, 0);
@@ -29,29 +59,29 @@ export function inputTypeCast(type, value) {
     }
 }
 
-export function getDeviceIp() {
+export function getDeviceIP() {
     return new URL(window.location.href).searchParams.get("ip");
 }
 
-export function getDeviceUrl() {
-    return `http://${getDeviceIp()}`;
+export function getDeviceURL() {
+    const deviceIP = getDeviceIP();
+    if(deviceIP) {
+        return `http://${deviceIP}`;
+    }
 }
 
-export async function callRestAPI(url, method = "GET", requestData) {
+export async function fetchRestAPI(url, method = "GET", timeout, requestData) {
     const options = {
         method,
         headers: {
             "Content-Type": "application/json"
         }
-    }
-
+    };
     if(requestData) {
         options.body = JSON.stringify(requestData);
     }
-
     const response = await fetch(url, options);
     const responseData = await response.json();
-
     if(!response.ok) {
         let errorMessage = `HTTP error! status: ${response.status}`;
         if(responseData.error) {
@@ -61,3 +91,12 @@ export async function callRestAPI(url, method = "GET", requestData) {
     }
     return responseData;
 }
+
+export async function fetchWithTimeout(url, options = {}, timeout = 5000) {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), timeout);
+    options.signal = controller.signal;
+    return fetch(url, options);
+};
+
+  

@@ -1,7 +1,7 @@
 <script>
     import Switch from "./Switch.svelte";
     import { onMount } from "svelte";
-    import { callRestAPI } from "../modules/Helpers";
+    import { fetchRestAPI } from "../modules/Helpers";
     
     export let isOn;
 

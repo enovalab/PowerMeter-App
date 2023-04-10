@@ -53,7 +53,7 @@
             class:selected={i === selectedIndex}
             style:width="calc(100vw / {tabs.length})"
         >
-            <img src={tab.icon} alt={tab.title}>
+            <span class="material-icons-round">{tab.icon}</span>
         </button>
     {/each}
 </nav>
@@ -99,10 +99,6 @@
     h1 {
         color: black;
         font-size: 25px;
-    }
-
-    img {
-        height: 30px;
     }
     
     .selected {

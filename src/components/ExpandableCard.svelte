@@ -15,7 +15,6 @@
         }
     }
 
-
     function toggle() {
         isExpanded = !isExpanded;
     }
@@ -27,7 +26,7 @@
             <slot name="preview"></slot>
         </div>
         {#if showIcon}
-            <img class:expanded={isExpanded} src="../icons/expand_circle_down_black_24dp.svg" alt="">
+            <span class="material-icons-round" class:expanded={isExpanded}>expand_circle_down</span>
         {/if}
     </div>
     <div class="content" class:expanded={isExpanded} bind:this={contentElement}>
@@ -54,17 +53,20 @@
     .preview {
         align-self: center;
         grid-column-start: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
 
-    img {
+    .material-icons-round {
+        font-size: 35px;
         grid-column-start: 3;
-        height: 40px;
         transform: rotate(90deg);
         transition: transform 0.7s;
     }
     
-    img.expanded {
+    .material-icons-round.expanded {
         transform: rotate(0deg);
     }
 </style>

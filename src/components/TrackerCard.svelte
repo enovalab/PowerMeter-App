@@ -2,7 +2,6 @@
     import { addAlphaToRGB, averageArray } from "../modules/Helpers";
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
-    import uuid from "@smakss/uuid";
 
     export let title;
     export let dataColor;
@@ -31,14 +30,14 @@
     $: averagePower = averageArray(data).toFixed(3);
     $: energy = ((averagePower * data.length * secondsBetweenSamples) / 3.6e+6).toFixed(3);
     
-    const chartID = uuid();    
+    let canvas;
     let chart;
     
     onMount(() => {
         const conrtrastColor = getComputedStyle(document.body).getPropertyValue("--contrast-color");
         Chart.defaults.font.family = "Dosis";
         Chart.defaults.font.size = 18;
-        chart = new Chart(chartID, {
+        chart = new Chart(canvas, {
             type: "line",
             data: {
                 labels,
@@ -82,7 +81,7 @@
 <section class="card card-padding">
     <h2>{title}</h2>
     <div class="chart-container">
-        <canvas id={chartID}/>
+        <canvas bind:this={canvas}/>
     </div>
     <div class="info">
         <span>Energy</span>

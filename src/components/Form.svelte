@@ -1,13 +1,11 @@
 <script>
     import Field from "./Field.svelte";
-    import uuid from "@smakss/uuid";
 
-    export let id = uuid();
     export let fields = [];
     export let data = {};
 </script>
 
-<form id={id} name={id} on:submit|preventDefault>
+<form on:submit|preventDefault>
     <div class="card-padding">
         {#each fields as field}
             <Field
@@ -21,7 +19,7 @@
             />
         {/each}
     </div>
-    <button type="submit" form={id}>
+    <button type="submit">
         <slot></slot>
     </button>
 </form>
@@ -33,14 +31,14 @@
         grid-template-columns: 1fr;
     }
 
-    button {
-        width: 100%;
-        height:40px;
-    }
-
     @media (min-width: 700px) {
         div {
             grid-template-columns: 300px calc(100% - 300px);
         }
+    }
+
+    button {
+        width: 100%;
+        height:40px;
     }
 </style>

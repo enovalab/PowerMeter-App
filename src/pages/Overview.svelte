@@ -3,15 +3,31 @@
     import Devices from "../tabs/Devices.svelte";
     import Tracker from "../tabs/Tracker.svelte";
     import Info from "../tabs/Info.svelte";
+    import { fetchRestAPI } from "../modules/Helpers";
+
+    
+    function fetchRecursive(i = 0) {
+        fetchRestAPI("http://192.168.178.153/api/tracker")
+            .then(response => {
+                console.log(i);
+                fetchRecursive(i + 1);
+            })
+            .catch(error => {
+                console.error(error);
+                fetchRecursive();
+            });
+    }
+
+    fetchRecursive();
     
     let selectedTabIndex = 0;
 </script>
 
 <div class="page">
     <Navbar bind:selectedIndex={selectedTabIndex} tabs = {[
-        {title: "Devices", icon: "../icons/view_list_black_24dp.svg"},
-        {title: "Tracker", icon: "../icons/query_stats_black_24dp.svg"},
-        {title: "Info", icon: "../icons/info_outline_black_24dp.svg"}
+        {title: "Devices", icon: "view_list"},
+        {title: "Tracker", icon: "query_stats"},
+        {title: "Info", icon: "info_outline"}
     ]}>
         <main>
             {#if selectedTabIndex === 0}

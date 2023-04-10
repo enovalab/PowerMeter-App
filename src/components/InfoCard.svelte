@@ -1,19 +1,28 @@
-<div class="card card-padding">
-    <slot></slot>
-</div>
+<script>
+    import ExpandableCard from "./ExpandableCard.svelte";
+
+    export let title;
+</script>
+
+<ExpandableCard>
+    <div slot="preview">
+        <h2>{title}</h2>
+    </div>
+    <div slot="content" class="card-padding">
+        <slot></slot>
+    </div>
+</ExpandableCard>
 
 <style>
-    .card {
-        font-size: 15px;
+    div[slot="content"] {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        row-gap: 10px;
-        column-gap: 20px;
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+        align-items: center;
     }
 
-    @media (min-width: 700px) {
-        .card {
-            font-size: 20px;
-        }
+    h2 {
+        color: black;
     }
 </style>

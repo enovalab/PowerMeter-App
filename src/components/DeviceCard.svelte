@@ -1,19 +1,29 @@
 <script>
     import Switch from "./Switch.svelte";
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
+    import { fetchWithTimeout, roundToStep } from "../modules/Helpers";
 
     export let name = "Power Meter";
     export let ip = "0.0.0.0";
     export let isSingleton = false;
     let isOnline = true;
-    let power = 132.89;
+    let power = 0;
 
     const url = new URL("/Device", window.location.href);
     url.searchParams.set("ip", ip);
-    console.log(url.href);
 
+    // setInterval(async () => {
+    //     try {
+    //         const response = await fetchWithTimeout(`http://${ip}/api/power`, {}, 5000);
+    //         const data = await response.json();
+    //         power = data.active;
+    //     }
+    //     catch(error) {
+    //         isOnline = false;
+    //     }
+    // }, 10000);
+    
     const dispatchEvent = createEventDispatcher();
-
     function handleDeleteClick() {
         if(confirm(`Are you sure you want to delete '${name}'?`)) {
             dispatchEvent("delete", name);
@@ -24,22 +34,26 @@
     }
 </script>
 
-<section class="card">
+<section class="card" on:click|self={handleDeviceClick} on:keydown|self={handleDeviceClick}>
     <button class:singleton={isSingleton} on:click={handleDeleteClick}>
-        <img src="../icons/delete_black_24dp.svg" alt="delete">
+        <span class="material-icons-round">delete</span>
     </button>
-    <a class="flex-column-center-all" href={url.href} class:offline="{!isOnline}" on:click={handleDeviceClick}>
+    <a class="flex-column-center-all" href={url.href} class:offline="{!isOnline}" >
         <h2>{name}</h2>
         <span>{ip}</span>
-        <!-- <span class:power-offline={!isOnline}>{power} W</span> -->
-    </a>  
-    <!-- <Switch width=50px height=25px/> -->
+        {#if isOnline}
+            <span>{roundToStep(power, 0.1)} W</span>
+        {/if}
+    </a>
+    <div>
+        <Switch width=50px height=25px/>
+    </div>
+
 </section>
 
 <style>
     .card {
-        height: 100px;
-        min-height: 100px;
+        min-height: 120px;
         overflow: hidden;
         display: flex;
         justify-content: space-between;
@@ -101,12 +115,4 @@
     button:active {
         background-color: var(--accent-color);
     }
-
-    img {
-        height: 25%;
-    }
-
-    /* .power-offline {
-        visibility: hidden;
-    } */
 </style>

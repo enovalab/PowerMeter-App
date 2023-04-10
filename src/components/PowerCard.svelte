@@ -1,14 +1,44 @@
 <script>
-    import { callRestAPI } from "../modules/Helpers";
+    import { fetchRestAPI, roundToStep } from "../modules/Helpers";
     import { onMount } from "svelte";
     
     export let measurements = [
-        {title: "Active Power", unit: "W"},
-        {title: "Apparent Power", unit: "VA"},
-        {title: "Reactive Power", unit: "var"},
-        {title: "Voltage", unit: "V"},
-        {title: "Current", unit: "A"},
-        {title: "Power Factor", unit: ""}
+        {
+            title: "Active Power",
+            unit: "W",
+            key: "active",
+            step: 0.1
+        },
+        {
+            title: "Apparent Power",
+            unit: "VA", 
+            key: "apparent",
+            step: 0.1
+        },
+        {
+            title: "Reactive Power",
+            unit: "var",
+            key: "reactive",
+            step: 0.1
+        },
+        {
+            title: "Voltage",
+            unit: "V",
+            key: "voltage",
+            step: 0.1
+        },
+        {
+            title: "Current",
+            unit: "A",
+            key: "current",
+            step: 0.001
+        },
+        {
+            title: "Power Factor",
+            unit: "",
+            key: "powerFactor",
+            step: 0.001
+        }
     ];
     
     export let isOn;
@@ -32,7 +62,7 @@
                 style:box-shadow={isOn ? "0 0 5px 3px var(--color)" : "0 0 0 3px var(--color)"}
             >
                 <h2>{measurement.title}</h2>
-                <span>{Object.values(power).at(i)} {measurement.unit}</span>
+                <span>{roundToStep(power[measurement.key], measurement.step)} {measurement.unit}</span>
             </div>
         {/each}
     </div>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     export let width = "50px";
     export let height = "25px";
     export let borderRadius = "5px";

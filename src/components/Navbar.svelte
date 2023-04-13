@@ -1,25 +1,22 @@
-<script>
-    import { createEventDispatcher } from "svelte";
+<script lang="ts">
+    interface Tab {
+        title: string;
+        icon: string;
+    }
 
-    export let tabs = []; 
+    export let tabs: Tab[]; 
     export let selectedIndex = 0;
-    export let title = "";
 
     $: title = tabs[selectedIndex].title;
 
-    const dispatchEvent = createEventDispatcher();
-    
-    function handleMouseWheel(event) {
-        if(event.wheelDelta > 0) {
+    function handleMouseWheel(event: WheelEvent) {
+        if(event.deltaY < 0) 
             nextTab();
-        }
-        else {
+        else
             preceedTab();
-        }
-        dispatchEvent("select", {selected: selectedIndex, title});
     }
 
-    function nextTab() {
+    function nextTab(): void {
         if(selectedIndex >= tabs.length - 1) {
             selectedIndex = 0;
         }
@@ -28,7 +25,7 @@
         }
     }
 
-    function preceedTab() {
+    function preceedTab(): void {
         if(selectedIndex <= 0) {
             selectedIndex = tabs.length - 1;
         }
@@ -46,10 +43,7 @@
 <nav class="bar" on:mousewheel={handleMouseWheel}>
     {#each tabs as tab, i}
         <button
-            on:click={() => {
-                selectedIndex = i;
-                dispatchEvent("select", {selectedIndex, title});
-            }}
+            on:click={() => selectedIndex = i}
             class:selected={i === selectedIndex}
             style:width="calc(100vw / {tabs.length})"
         >

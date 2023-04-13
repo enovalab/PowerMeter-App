@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { fetchRestAPI, roundToStep } from "../modules/Helpers";
     import { onMount } from "svelte";
     
@@ -41,7 +41,7 @@
         }
     ];
     
-    export let isOn;
+    export let isOn: boolean;
 
     export let power = {
         active: 0,

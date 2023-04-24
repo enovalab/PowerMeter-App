@@ -1,12 +1,29 @@
 <script lang="ts">
+    import { fetchRestAPI } from "../modules/Helpers";
+
     export let width = "50px";
     export let height = "25px";
     export let borderRadius = "5px";
     export let isOn = false;
+    export let url: string;
+    
+    fetchRestAPI(url).then(data => {
+        isOn = data.state;
+    });
+
+    async function handleClick() {
+        isOn = !isOn;
+        try {
+            const data = await fetchRestAPI(url, "PATCH", { state: isOn });
+            isOn = data.state;
+        }
+        catch(error) {
+        }
+    }
 </script>
 
 <button 
-    on:click={() => isOn = !isOn} on:click 
+    on:click={handleClick} on:click 
     style:height style:width style:--border-radius={borderRadius}
     class:on="{isOn}"
 >   

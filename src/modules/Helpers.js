@@ -70,7 +70,7 @@ export function getDeviceURL() {
     }
 }
 
-export async function fetchRestAPI(url, method = "GET", timeout, requestData) {
+export async function fetchRestAPI(url, method = "GET", requestData) {
     const options = {
         method,
         headers: {
@@ -92,11 +92,18 @@ export async function fetchRestAPI(url, method = "GET", timeout, requestData) {
     return responseData;
 }
 
-export async function fetchWithTimeout(url, options = {}, timeout = 5000) {
-    const controller = new AbortController();
-    setTimeout(() => controller.abort(), timeout);
-    options.signal = controller.signal;
-    return fetch(url, options);
-};
+export function callAsyncRecursive(asycFunction, callback) {
+    asycFunction()
+    .then(data => {
+        if(callback(data)) {
+            callAsyncRecursive(asycFunction, callback);
+        }
+    })
+    .catch(error => {
+        if(callback(null, error)) {
+            callAsyncRecursive(asycFunction, callback);
+        }
+    });
+}
 
   

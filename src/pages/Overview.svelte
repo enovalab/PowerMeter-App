@@ -3,22 +3,6 @@
     import Devices from "../tabs/Devices.svelte";
     import Tracker from "../tabs/Tracker.svelte";
     import Info from "../tabs/Info.svelte";
-    import { fetchRestAPI } from "../modules/Helpers";
-
-    
-    // function fetchRecursive(i = 0) {
-    //     fetchRestAPI("http://192.168.178.153/api/tracker")
-    //         .then(response => {
-    //             console.log(i);
-    //             fetchRecursive(i + 1);
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //             fetchRecursive();
-    //         });
-    // }
-
-    // fetchRecursive();
     
     let selectedTabIndex = 0;
 </script>

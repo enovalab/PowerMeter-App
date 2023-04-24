@@ -16,6 +16,10 @@
             preceedTab();
     }
 
+    function handleClick(event: Event): void {
+
+    }
+
     function nextTab(): void {
         if(selectedIndex >= tabs.length - 1) {
             selectedIndex = 0;

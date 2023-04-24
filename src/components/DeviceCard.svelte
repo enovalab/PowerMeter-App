@@ -1,28 +1,48 @@
 <script>
     import Switch from "./Switch.svelte";
-    import { createEventDispatcher, onMount } from "svelte";
-    import { fetchWithTimeout, roundToStep } from "../modules/Helpers";
+    import { createEventDispatcher, onDestroy, onMount } from "svelte";
+    import { callAsyncRecursive, fetchRestAPI, roundToStep } from "../modules/Helpers";
 
     export let name = "Power Meter";
     export let ip = "0.0.0.0";
     export let isSingleton = false;
-    let isOnline = true;
+    let isOnline = false;
     let power = 0;
+
+    let keepFetching = true;
+    
+    onDestroy(() => {
+        keepFetching = false;
+    });
+    
+    const websocket = new WebSocket(`ws://${ip}/ws/power`);
+    websocket.onmessage = event => {
+        const data = JSON.parse(event.data);
+        power = data.active;
+        isOnline = true;
+    };
+
+    // callAsyncRecursive(
+    //     () => {
+    //         return fetchRestAPI(`http://${ip}/api/power`);
+    //     },
+    //     (data, error) => {
+    //         if(data) {
+    //             isOnline = true;
+    //             power = data.active;
+    //         }
+    //         else {
+    //             isOnline = false;
+    //         }
+
+    //         return keepFetching;
+    //     }
+    // );
+  
 
     const url = new URL("/Device", window.location.href);
     url.searchParams.set("ip", ip);
 
-    // setInterval(async () => {
-    //     try {
-    //         const response = await fetchWithTimeout(`http://${ip}/api/power`, {}, 5000);
-    //         const data = await response.json();
-    //         power = data.active;
-    //     }
-    //     catch(error) {
-    //         isOnline = false;
-    //     }
-    // }, 10000);
-    
     const dispatchEvent = createEventDispatcher();
     function handleDeleteClick() {
         if(confirm(`Are you sure you want to delete '${name}'?`)) {
@@ -46,9 +66,8 @@
         {/if}
     </a>
     <div>
-        <Switch width=50px height=25px/>
+        <Switch url={`http://${ip}/api/config/relay`} width=50px height=25px/>
     </div>
-
 </section>
 
 <style>

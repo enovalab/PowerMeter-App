@@ -16,8 +16,10 @@
 
 <AddDeviceCard on:add={handleAdd}/>
 <DeviceCard isSingleton={true} name="Power Meter AP" ip={"192.168.4.1"}/>
-{#each $devices as device, i}
-    <DeviceCard name={device.name} ip={device.ip} on:delete={() => handleDelete(i)}/>
-{/each}
+{#key $devices}
+    {#each $devices as device, i}
+        <DeviceCard name={device.name} ip={device.ip} on:delete={() => handleDelete(i)}/>
+    {/each}
+{/key}
 
 

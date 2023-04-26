@@ -15,29 +15,38 @@
         keepFetching = false;
     });
     
-    const websocket = new WebSocket(`ws://${ip}/ws/power`);
-    websocket.onmessage = event => {
-        const data = JSON.parse(event.data);
-        power = data.active;
-        isOnline = true;
-    };
+    // const websocket = new WebSocket(`ws://${ip}/ws/power`);
 
-    // callAsyncRecursive(
-    //     () => {
-    //         return fetchRestAPI(`http://${ip}/api/power`);
-    //     },
-    //     (data, error) => {
-    //         if(data) {
-    //             isOnline = true;
-    //             power = data.active;
-    //         }
-    //         else {
-    //             isOnline = false;
-    //         }
+    // websocket.onerror = () => {
+    //     isOnline = false;
+    // }
 
-    //         return keepFetching;
-    //     }
-    // );
+    // websocket.onclose = () => {
+    //     isOnline = false;
+    // }
+
+    // websocket.onmessage = event => {
+    //     const data = JSON.parse(event.data);
+    //     power = data.active;
+    //     isOnline = true;
+    // };
+
+    callAsyncRecursive(
+        () => {
+            return fetchRestAPI(`http://${ip}/api/power`);
+        },
+        (data, error) => {
+            if(data) {
+                isOnline = true;
+                power = data.active;
+            }
+            else {
+                isOnline = false;
+            }
+
+            return keepFetching;
+        }
+    );
   
 
     const url = new URL("/Device", window.location.href);

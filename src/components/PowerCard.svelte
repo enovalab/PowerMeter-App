@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fetchRestAPI, roundToStep } from "../modules/Helpers";
+    import { fetchRestAPI, getDeviceIP, roundToStep } from "../modules/Helpers";
     import { onMount } from "svelte";
     
     export let measurements = [
@@ -51,6 +51,13 @@
         current: 0,
         powerFactor: 0
     };
+
+    const websocket = new WebSocket(`ws://${getDeviceIP}/ws/power`);
+
+    // websocket.addEventListener("message", event => {
+    //     power = JSON.parse(event.data);
+    //     console.log(power);
+    // });
 
 </script>
 

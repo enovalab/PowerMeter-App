@@ -1,24 +1,13 @@
 <script>
     import Switch from "./Switch.svelte";
-    import { onMount } from "svelte";
-    import { fetchRestAPI } from "../modules/Helpers";
+    import { getDeviceURL } from "../modules/Helpers";
     
     export let isOn;
-
-    onMount(async () => {
-        // const response = await callRestAPI(`${baseURL}/api/config/relay`);
-        // isOn = response.state;
-    });
-
-    async function handleSwitchClick() {
-        // const response =  await callRestAPI(`${baseURL}/api/config/relay`, "PATCH", {state: isOn});
-        // isOn = response.state;
-    }
 </script>
 
 <section class="card card-padding fixed">
     <div class="switch">
-        <Switch width=200px height=100px borderRadius=20px bind:isOn={isOn} on:click={handleSwitchClick}/>
+        <Switch url={getDeviceURL() + "/api/config/relay"} width=200px height=100px borderRadius=20px bind:isOn={isOn}/>
     </div>
 </section>
 

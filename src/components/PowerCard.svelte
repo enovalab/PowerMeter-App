@@ -52,13 +52,6 @@
         powerFactor: 0
     };
 
-    const websocket = new WebSocket(`ws://${getDeviceIP}/ws/power`);
-
-    // websocket.addEventListener("message", event => {
-    //     power = JSON.parse(event.data);
-    //     console.log(power);
-    // });
-
 </script>
 
 <div class="card card-padding">

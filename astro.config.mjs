@@ -6,7 +6,7 @@ import serviceWorker from "astrojs-service-worker";
 export default defineConfig({
     site: "https://enovalab.github.io",
     integrations: [
-        serviceWorker(),
+        // serviceWorker(),
         svelte()
     ]
 });

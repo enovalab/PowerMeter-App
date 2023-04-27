@@ -1,6 +1,6 @@
 <script>
     import Switch from "./Switch.svelte";
-    import { createEventDispatcher, onDestroy, onMount } from "svelte";
+    import { createEventDispatcher, onDestroy } from "svelte";
     import { callAsyncRecursive, fetchRestAPI, roundToStep } from "../modules/Helpers";
 
     export let name = "Power Meter";
@@ -8,49 +8,30 @@
     export let isSingleton = false;
     let isOnline = false;
     let power = 0;
-
-    let keepFetching = true;
+    let keepPolling = true;
     
     onDestroy(() => {
-        keepFetching = false;
+        keepPolling = false;
     });
     
-    // const websocket = new WebSocket(`ws://${ip}/ws/power`);
-
-    // websocket.onerror = () => {
-    //     isOnline = false;
-    // }
-
-    // websocket.onclose = () => {
-    //     isOnline = false;
-    // }
-
-    // websocket.onmessage = event => {
-    //     const data = JSON.parse(event.data);
-    //     power = data.active;
-    //     isOnline = true;
-    // };
-
     callAsyncRecursive(
-        () => {
-            return fetchRestAPI(`http://${ip}/api/power`);
-        },
+        () => fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000),
         (data, error) => {
             if(data) {
                 isOnline = true;
                 power = data.active;
             }
-            else {
+            if(error) {
                 isOnline = false;
             }
 
-            return keepFetching;
+            return keepPolling;
         }
     );
   
 
     const url = new URL("/Device", window.location.href);
-    url.searchParams.set("ip", ip);
+    // url.searchParams.set("ip", "foo");
 
     const dispatchEvent = createEventDispatcher();
     function handleDeleteClick() {
@@ -59,15 +40,13 @@
         }
     }
 
-    function handleDeviceClick() {
-    }
 </script>
 
-<section class="card" on:click|self={handleDeviceClick} on:keydown|self={handleDeviceClick}>
+<section class="card">
     <button class:singleton={isSingleton} on:click={handleDeleteClick}>
         <span class="material-icons-round">delete</span>
     </button>
-    <a class="flex-column-center-all" href={url.href} class:offline="{!isOnline}" >
+    <a class="flex-column-center-all" href={url} class:offline="{!isOnline}" >
         <h2>{name}</h2>
         <span>{ip}</span>
         {#if isOnline}

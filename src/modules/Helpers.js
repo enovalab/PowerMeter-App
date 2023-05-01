@@ -70,8 +70,9 @@ export function getDeviceURL() {
     }
 }
 
-export async function fetchRestAPI(url, method = "GET", requestData) {
+export async function fetchRestAPI(url, method = "GET", requestData, timoutMilliseconds = 20000) {
     const options = {
+        signal: AbortSignal.timeout(timoutMilliseconds),
         method,
         headers: {
             "Content-Type": "application/json"

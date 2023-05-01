@@ -17,8 +17,7 @@
             const data = await fetchRestAPI(url, "PATCH", { state: isOn });
             isOn = data.state;
         }
-        catch(error) {
-        }
+        catch(error) {}
     }
 </script>
 

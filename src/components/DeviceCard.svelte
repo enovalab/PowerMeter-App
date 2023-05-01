@@ -9,39 +9,30 @@
     let isOnline = false;
     let power = 0;
 
-    let keepFetching = true;
+    let keepPolling = true;
     
     onDestroy(() => {
-        keepFetching = false;
+        keepPolling = false;
     });
-    
-    const websocket = new WebSocket(`ws://${ip}/ws/power`);
-    websocket.onmessage = event => {
-        const data = JSON.parse(event.data);
-        power = data.active;
-        isOnline = true;
-    };
 
-    // callAsyncRecursive(
-    //     () => {
-    //         return fetchRestAPI(`http://${ip}/api/power`);
-    //     },
-    //     (data, error) => {
-    //         if(data) {
-    //             isOnline = true;
-    //             power = data.active;
-    //         }
-    //         else {
-    //             isOnline = false;
-    //         }
-
-    //         return keepFetching;
-    //     }
-    // );
+    callAsyncRecursive(
+        () => fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000),
+        (data, error) => {
+            if(data) {
+                isOnline = true;
+                power = data.active;
+            }
+            else {
+                isOnline = false;
+            }
+            return keepPolling;
+        }
+    );
   
 
     const url = new URL("/Device", window.location.href);
     url.searchParams.set("ip", ip);
+    console.log(url.href);
 
     const dispatchEvent = createEventDispatcher();
     function handleDeleteClick() {

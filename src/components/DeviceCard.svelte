@@ -1,37 +1,38 @@
-<script>
+<script lang="ts">
     import Switch from "./Switch.svelte";
     import { createEventDispatcher, onDestroy } from "svelte";
-    import { callAsyncRecursive, fetchRestAPI, roundToStep } from "../modules/Helpers";
+    import { fetchRestAPI, roundToStep } from "../modules/Helpers";
 
     export let name = "Power Meter";
     export let ip = "0.0.0.0";
     export let isSingleton = false;
     let isOnline = false;
     let power = 0;
-    let keepPolling = true;
     
     onDestroy(() => {
-        keepPolling = false;
+        clearInterval(pollingIntervalId);
     });
     
-    callAsyncRecursive(
-        () => fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000),
-        (data, error) => {
-            if(data) {
+    let pollAgain = true;
+    const pollingIntervalId = setInterval(() => {
+        if(pollAgain) {
+            fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000)
+            .then(data => {
                 isOnline = true;
                 power = data.active;
-            }
-            if(error) {
+            })
+            .catch(() => {
                 isOnline = false;
-            }
-
-            return keepPolling;
+            })
+            .finally(() => {
+                pollAgain = true;
+            });
         }
-    );
-  
+        pollAgain = false;
+    }, 1);
 
     const url = new URL("/Device", window.location.href);
-    // url.searchParams.set("ip", "foo");
+    url.searchParams.set("ip", ip);
 
     const dispatchEvent = createEventDispatcher();
     function handleDeleteClick() {
@@ -46,7 +47,7 @@
     <button class:singleton={isSingleton} on:click={handleDeleteClick}>
         <span class="material-icons-round">delete</span>
     </button>
-    <a class="flex-column-center-all" href={url} class:offline="{!isOnline}" >
+    <a class="flex-column-center-all" href={url.href} class:offline="{!isOnline}" >
         <h2>{name}</h2>
         <span>{ip}</span>
         {#if isOnline}

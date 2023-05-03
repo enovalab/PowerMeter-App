@@ -92,19 +92,3 @@ export async function fetchRestAPI(url, method = "GET", requestData, timeoutMill
     }
     return responseData;
 }
-
-export function callAsyncRecursive(asycFunction, callback) {
-    asycFunction()
-    .then(data => {
-        if(callback(data)) {
-            callAsyncRecursive(asycFunction, callback);
-        }
-    })
-    .catch(error => {
-        if(callback(null, error)) {
-            callAsyncRecursive(asycFunction, callback);
-        }
-    });
-}
-
-  

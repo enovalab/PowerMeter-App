@@ -1,6 +1,6 @@
 <script lang="ts">
+    import { onDestroy } from "svelte";
     import { fetchRestAPI, getDeviceIP, roundToStep } from "../modules/Helpers";
-    import { onMount } from "svelte";
     
     export let measurements = [
         {
@@ -43,7 +43,7 @@
     
     export let isOn: boolean;
 
-    export let power = {
+    let power = {
         active: 0,
         apparent: 0,
         reactive: 0,
@@ -52,6 +52,21 @@
         powerFactor: 0
     };
 
+    onDestroy(() => {
+        clearInterval(pollingIntervalId);
+    });
+    
+    let pollAgain = true;
+    const pollingIntervalId = setInterval(() => {
+        if(pollAgain) {
+            fetchRestAPI(`http://${getDeviceIP()}/api/power`, "GET", undefined, 5000)
+            .then(data => {
+                power = data;
+                pollAgain = true;
+            });
+        }
+        pollAgain = false;
+    }, 1);
 </script>
 
 <div class="card card-padding">

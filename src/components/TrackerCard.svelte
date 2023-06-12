@@ -1,14 +1,16 @@
-<script>
-    import { addAlphaToRGB, averageArray } from "../modules/Helpers";
+<script lang="ts">
+    import { addAlphaToRGB, averageArray, fetchRestAPI, getDeviceURL } from "../modules/Helpers";
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
 
-    export let title;
-    export let dataColor;
-    export let data;
-    export let secondsBetweenSamples;
+    export let title: string;
+    export let dataColor: string;
+    export let apiEndpoints: string[];
+    export let secondsBetweenSamples: number;
 
-    let labels = [];
+    let data: number[] = [];
+
+    let labels: string[] = [];
     data.forEach((dataItem, index) => {
         const labelDate = new Date(Date.now() - index * secondsBetweenSamples * 1000);
         let labelString;
@@ -27,11 +29,11 @@
         labels.unshift(labelString);
     });
 
-    $: averagePower = averageArray(data).toFixed(3);
-    $: energy = ((averagePower * data.length * secondsBetweenSamples) / 3.6e+6).toFixed(3);
+    $: averagePower = averageArray(data);
+    $: energy = ((averagePower * data.length * secondsBetweenSamples) / 3.6e+6);
     
-    let canvas;
-    let chart;
+    let canvas: HTMLCanvasElement;
+    let chart: Chart;
     
     onMount(() => {
         const conrtrastColor = getComputedStyle(document.body).getPropertyValue("--contrast-color");
@@ -76,6 +78,13 @@
             },
         });    
     });
+
+    for(const apiEndpoint of apiEndpoints) {
+        fetchRestAPI(apiEndpoint)
+        .then(values => {
+            data = val
+        });
+    }
 </script>
 
 <section class="card card-padding">
@@ -85,11 +94,11 @@
     </div>
     <div class="info">
         <span>Energy</span>
-        <span class="right-aligned">{energy}</span>
+        <span class="right-aligned">{energy.toFixed(3)}</span>
         <span class="right-aligned">kWh</span>
 
         <span>Average Power</span>
-        <span class="right-aligned">{averagePower}</span>
+        <span class="right-aligned">{averagePower.toFixed(3)}</span>
         <span class="right-aligned">W</span>
     </div>
 </section>

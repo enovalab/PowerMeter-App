@@ -29,7 +29,7 @@
             });
         }
         pollAgain = false;
-    }, 1);
+    }, 100);
 
     const url = new URL("/Device", window.location.href);
     url.searchParams.set("ip", ip);

@@ -6,31 +6,31 @@
         {
             title: "Active Power",
             unit: "W",
-            key: "active",
+            key: "activePower_W",
             step: 0.1
         },
         {
             title: "Apparent Power",
             unit: "VA", 
-            key: "apparent",
+            key: "apparentPower_VA",
             step: 0.1
         },
         {
             title: "Reactive Power",
             unit: "var",
-            key: "reactive",
+            key: "reactivePower_var",
             step: 0.1
         },
         {
             title: "Voltage",
             unit: "V",
-            key: "voltage",
+            key: "voltage_Vrms",
             step: 0.1
         },
         {
             title: "Current",
             unit: "A",
-            key: "current",
+            key: "current_Arms",
             step: 0.001
         },
         {
@@ -44,11 +44,11 @@
     export let isOn: boolean;
 
     let power = {
-        active: 0,
-        apparent: 0,
-        reactive: 0,
-        voltage: 0,
-        current: 0,
+        activePower_W: 0,
+        apparentPower_VA: 0,
+        reactivePower_var: 0,
+        voltage_Vrms: 0,
+        current_Arms: 0,
         powerFactor: 0
     };
 

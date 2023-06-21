@@ -84,11 +84,11 @@ export async function fetchRestAPI(url, method = "GET", requestData, timeoutMill
     const response = await fetch(url, options);
     const responseData = await response.json();
     if(!response.ok) {
-        let errorMessage = `HTTP error! status: ${response.status}`;
+        let errorMessage = `HTTP error! status: ${response.status} `;
         if(responseData.error) {
             errorMessage += `message: ${responseData.error}`;
         }
         throw new Error(errorMessage);
     }
     return responseData;
-}
+}  

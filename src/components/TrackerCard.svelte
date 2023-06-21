@@ -82,7 +82,7 @@
     for(const apiEndpoint of apiEndpoints) {
         fetchRestAPI(apiEndpoint)
         .then(values => {
-            data = val
+            
         });
     }
 </script>

@@ -19,7 +19,7 @@
             fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000)
             .then(data => {
                 isOnline = true;
-                power = data.active;
+                power = data.activePower_W;
             })
             .catch(() => {
                 isOnline = false;
@@ -51,7 +51,7 @@
         <h2>{name}</h2>
         <span>{ip}</span>
         {#if isOnline}
-            <span>{roundToStep(power, 0.1)} W</span>
+            <span>{power.toFixed(1)} W</span>
         {/if}
     </a>
     <div>

@@ -7,7 +7,7 @@
 
 <section class="card card-padding fixed">
     <div class="switch">
-        <Switch url={getDeviceURL() + "/api/config/relay"} width=200px height=100px borderRadius=20px bind:isOn={isOn}/>
+        <Switch url={getDeviceURL() + "/api/relay"} width=200px height=100px borderRadius=20px bind:isOn={isOn}/>
     </div>
 </section>
 

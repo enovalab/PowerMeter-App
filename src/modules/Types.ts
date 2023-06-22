@@ -1,3 +1,5 @@
+import type { key } from "../components/Field.svelte";
+
 export interface ACPower {
     activePower_W: number;
     reactivePower_var: number;
@@ -13,3 +15,14 @@ export interface Measurement {
     key: keyof ACPower;
     decimals: number;
 };
+
+export interface Tracker {
+    title: string;
+    duration_s: number;
+    sampleCount: number;
+    data: number[];
+}
+
+export interface TrackerSet {
+    [id: string]: Tracker;
+}

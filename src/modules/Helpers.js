@@ -78,7 +78,7 @@ export async function fetchRestAPI(url, method = "GET", requestData, timeoutMill
             "Content-Type": "application/json"
         }
     };
-    if(requestData) {
+    if(requestData !== undefined) {
         options.body = JSON.stringify(requestData);
     }
     const response = await fetch(url, options);

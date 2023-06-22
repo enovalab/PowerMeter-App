@@ -1,7 +1,7 @@
 <script>
     import Navbar from "../components/Navbar.svelte";
     import Devices from "../tabs/Devices.svelte";
-    import Tracker from "../tabs/Tracker.svelte";
+    import Tracker from "../tabs/Trackers.svelte";
     import Info from "../tabs/Info.svelte";
     
     let selectedTabIndex = 0;
@@ -10,7 +10,7 @@
 <div class="page">
     <Navbar bind:selectedIndex={selectedTabIndex} tabs = {[
         {title: "Devices", icon: "view_list"},
-        {title: "Tracker", icon: "query_stats"},
+        // {title: "Trackers", icon: "query_stats"},
         {title: "Info", icon: "info_outline"}
     ]}>
         <main>
@@ -18,11 +18,11 @@
                 <Devices/>
             {/if}
 
-            {#if selectedTabIndex === 1}
+            <!-- {#if selectedTabIndex === 1}
                 <Tracker/>
-            {/if}
+            {/if} -->
 
-            {#if selectedTabIndex === 2}
+            {#if selectedTabIndex === 1}
                 <Info/>
             {/if}
         </main>

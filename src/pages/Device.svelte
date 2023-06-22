@@ -1,10 +1,10 @@
 <script>
     import Navbar from "../components/Navbar.svelte";
     import Power from "../tabs/Power.svelte";
-    import Tracker from "../tabs/Tracker.svelte";
     import Config from "../tabs/Config.svelte";
     import Info from "../tabs/Info.svelte";
     import { getDeviceURL } from "../modules/Helpers";
+    import Trackers from "../tabs/Trackers.svelte";
 
     let selectedTabIndex = 0;
 </script>
@@ -12,7 +12,7 @@
 <div class="page">
     <Navbar bind:selectedIndex={selectedTabIndex} tabs = {[
         {title: "Power", icon: "power"},
-        {title: "Tracker", icon: "query_stats"},
+        {title: "Trackers", icon: "query_stats"},
         {title: "Config", icon: "construction"},
         {title: "Info", icon: "info_outline"}
     ]}>
@@ -31,7 +31,7 @@
             {/if}
 
             {#if selectedTabIndex === 1}
-                <Tracker/>
+                <Trackers/>
             {/if}
 
             {#if selectedTabIndex === 2}

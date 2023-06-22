@@ -1,11 +1,12 @@
 <script>
-    import { onMount } from "svelte";
     import InfoCard from "../components/InfoCard.svelte";
+    import Switch from "../components/Switch.svelte";
+    import { onMount, onDestroy } from "svelte";
     import { getDeviceIP, getDeviceURL, formatDuration, fetchRestAPI } from "../modules/Helpers";
 
     let info = {
         firmware: "",
-        mac: "",
+        mac: "aadsfassafd",
         uptime_ms: 0,
         filesystem: {
             total_B: 0,
@@ -18,13 +19,39 @@
         
     };
     let wifi = {
-        mode: ""
+        mode: "",
+        sta: {
+            staticIP: "0.0.0.0"
+        }
     };
-
-    onMount(async () => {
-        info = await fetchRestAPI(getDeviceURL() + "/api/info", "GET");
-        wifi = await fetchRestAPI(getDeviceURL() + "/api/config/wifi", "GET");
-    });
+    if(getDeviceURL()) {
+    
+        onMount(async () => {
+            wifi = await fetchRestAPI(getDeviceURL() + "/api/config/wifi", "GET");
+        });
+    
+        let pollAgain = true;
+        const pollingIntervalId = setInterval(pollInfo, 1000);
+    
+        onDestroy(() => {
+            clearInterval(pollingIntervalId);
+        });
+    
+        function pollInfo () {
+            if(pollAgain) {
+                fetchRestAPI(getDeviceURL() +"/api/info")
+                .then(data => {
+                    info = data;
+                })
+                .catch(() => {})
+                .finally(() => {
+                    pollAgain = true;
+                });
+            }
+            pollAgain = false;
+        }
+        pollInfo();
+    }
 </script>
 
 {#if getDeviceURL()}
@@ -32,9 +59,19 @@
         <b>IP Address</b>
         <span>{getDeviceIP()}</span>
         <b>MAC Address</b>
-        <span>{info.mac.toString(16)}</span>
+        <span>{info.mac.toString(16).match(/(.{2})/g).join(":")}</span>
         <b>WiFi Mode</b>
-        <span>{wifi.mode}</span>
+        <span>
+            {wifi.mode}
+            /
+            {#if wifi.mode === "Stationary"}
+                {#if getDeviceIP() === wifi.staticIP}
+                    Static IP
+                {:else}
+                    DHCP
+                {/if}
+            {/if}
+        </span>
         <b>Uptime</b>
         <span>{formatDuration(info.uptime_ms)}</span>
         <b>Firmware Version</b>
@@ -42,10 +79,11 @@
         <a href="https://github.com/enovalab/PowerMeter-App">enovalab/<wbr>PowerMeter-Firmware</a>
         <b>Filesystem</b>
         <span>{(info.filesystem.used_B / info.filesystem.total_B * 100).toFixed(0)}% used</span>        
-        <b>Heap Memory</b>
+        <b>Memory (Heap)</b>
         <span>{(info.heap.used_B / info.heap.total_B * 100).toFixed(0)}% used</span>        
     </InfoCard>
 {/if}
+
 <InfoCard title="App">
     <b>App Version</b>
     <span>0.0.0</span>

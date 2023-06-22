@@ -55,7 +55,7 @@
         {/if}
     </a>
     <div>
-        <Switch url={`http://${ip}/api/config/relay`} width=50px height=25px/>
+        <Switch url={`http://${ip}/api/relay`} width=50px height=25px/>
     </div>
 </section>
 

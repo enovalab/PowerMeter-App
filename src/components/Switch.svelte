@@ -8,14 +8,15 @@
     export let url: string;
     
     fetchRestAPI(url).then(data => {
-        isOn = data.state;
+        isOn = data;
     });
 
     async function handleClick() {
         isOn = !isOn;
+        console.log(isOn);
         try {
-            const data = await fetchRestAPI(url, "PATCH", { state: isOn });
-            isOn = data.state;
+            const data = await fetchRestAPI(url, "PATCH", isOn);
+            isOn = data;
         }
         catch(error) {
         }

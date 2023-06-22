@@ -16,7 +16,7 @@
     }
 </script>
 
-<ExpandableCard showIcon={false} bind:isExpanded={isExpanded}>
+<ExpandableCard showExpandIcon={false} bind:isExpanded={isExpanded}>
     <span slot="preview" class="material-icons-round">add</span>
     <div slot="content">
         <Form on:submit={handleSubmit}  bind:data={data} fields={[

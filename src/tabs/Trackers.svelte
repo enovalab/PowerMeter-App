@@ -1,8 +1,9 @@
 <script lang="ts">
     import { onDestroy } from "svelte";
-    import TrackerCard from "../components/TrackerCard.svelte"
+    import TrackerChart from "../components/TrackerChart.svelte"
     import { fetchRestAPI, getDeviceURL } from "../modules/Helpers";
-    import type { Tracker, TrackerSet } from "../modules/Types";
+    import type { TrackerSet } from "../modules/Types";
+    import ExpandableCard from "../components/ExpandableCard.svelte";
 
     let trackers: TrackerSet = {};
     
@@ -11,7 +12,8 @@
     });
     
     let pollAgain = true;
-    const pollingIntervalId = setInterval(() => {
+    const pollingIntervalId = setInterval(pollTrackers, 5000);
+    function pollTrackers() {
         if(pollAgain) {
             fetchRestAPI(getDeviceURL() + "/api/trackers", "GET", undefined, 5000)
             .then(data => {
@@ -23,18 +25,33 @@
             });
         }
         pollAgain = false;
-    }, 5000);
+    }
+    pollTrackers();
+
+    function handleDelete(id: string) {
+        console.log(id);
+    }
 </script>
 
 {#each Object.entries(trackers) as tracker}
-    {#key tracker}
-        <TrackerCard 
-            title={tracker[1].title}
-            duration_s={tracker[1].duration_s}
-            sampleCount={tracker[1].sampleCount}
-            data={tracker[1].data}
-            dataColor="rgb(50, 100, 255)"
-            id={tracker[0]}
-        />
-    {/key}
+    <ExpandableCard>
+        <h2 slot="preview">{tracker[1].title}</h2>
+        <span on:click|stopPropagation={() => {handleDelete(tracker[0])}} class="material-icons-round" slot="icon">delete</span>
+        <div slot="content">
+            {#key tracker}
+                <TrackerChart
+                    duration_s={tracker[1].duration_s}
+                    sampleCount={tracker[1].sampleCount}
+                    data={tracker[1].data}
+                    dataColor="rgb(50, 100, 255)"
+                />
+            {/key}
+        </div>
+    </ExpandableCard>
 {/each}
+
+<style>
+    h2 {
+        color: black;
+    }
+</style>

@@ -58,7 +58,9 @@
     });
     
     let pollAgain = true;
-    const pollingIntervalId = setInterval(() => {
+    const pollingIntervalId = setInterval(pollPower, 100);
+
+    function pollPower() {
         if(pollAgain) {
             fetchRestAPI(getDeviceURL() + "/api/power", "GET", undefined, 5000)
             .then(data => {
@@ -70,7 +72,7 @@
             });
         }
         pollAgain = false;
-    }, 100);
+    }
 </script>
 
 <div class="card card-padding">

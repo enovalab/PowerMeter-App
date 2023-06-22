@@ -6,7 +6,7 @@
 
     let info = {
         firmware: "",
-        mac: "aadsfassafd",
+        mac: "            ",
         uptime_ms: 0,
         filesystem: {
             total_B: 0,
@@ -21,34 +21,53 @@
     let wifi = {
         mode: "",
         sta: {
-            staticIP: "0.0.0.0"
+            staticIP: ""
         }
+
     };
     if(getDeviceURL()) {
-    
-        onMount(async () => {
-            wifi = await fetchRestAPI(getDeviceURL() + "/api/config/wifi", "GET");
-        });
-    
-        let pollAgain = true;
-        const pollingIntervalId = setInterval(pollInfo, 1000);
+        let pollWifiAgain = true;
+        const wifiPollingIntervalId = setInterval(pollWifi, 1000);
     
         onDestroy(() => {
-            clearInterval(pollingIntervalId);
+            clearInterval(wifiPollingIntervalId);
+        });
+    
+        function pollWifi () {
+            if(pollWifiAgain) {
+                fetchRestAPI(getDeviceURL() +"/api/config/wifi")
+                .then(data => {
+                    wifi = data;
+                })
+                .catch(() => {})
+                .finally(() => {
+                    pollWifiAgain = true;
+                });
+            }
+            pollWifiAgain = false;
+        }
+        pollWifi();
+
+
+        let pollInfoAgain = true;
+        const infoPollingIntervalId = setInterval(pollInfo, 1000);
+    
+        onDestroy(() => {
+            clearInterval(infoPollingIntervalId);
         });
     
         function pollInfo () {
-            if(pollAgain) {
+            if(pollInfoAgain) {
                 fetchRestAPI(getDeviceURL() +"/api/info")
                 .then(data => {
                     info = data;
                 })
                 .catch(() => {})
                 .finally(() => {
-                    pollAgain = true;
+                    pollInfoAgain = true;
                 });
             }
-            pollAgain = false;
+            pollInfoAgain = false;
         }
         pollInfo();
     }
@@ -65,7 +84,7 @@
             {wifi.mode}
             /
             {#if wifi.mode === "Stationary"}
-                {#if getDeviceIP() === wifi.staticIP}
+                {#if getDeviceIP() === wifi.sta.staticIP}
                     Static IP
                 {:else}
                     DHCP

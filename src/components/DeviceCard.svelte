@@ -14,7 +14,9 @@
     });
     
     let pollAgain = true;
-    const pollingIntervalId = setInterval(() => {
+    const pollingIntervalId = setInterval(pollPower, 100);
+
+    function pollPower() {
         if(pollAgain) {
             fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000)
             .then(data => {
@@ -29,7 +31,8 @@
             });
         }
         pollAgain = false;
-    }, 100);
+    }
+    pollPower();
 
     const url = new URL("/Device", window.location.href);
     url.searchParams.set("ip", ip);

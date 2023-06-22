@@ -2,14 +2,11 @@
     import { addAlphaToRGB, averageArray, fetchRestAPI, getDeviceURL } from "../modules/Helpers";
     import { Chart } from "chart.js/auto";
     import { onMount } from "svelte";
-    import ExpandableCard from "./ExpandableCard.svelte";
 
-    export let title: string;
     export let sampleCount: number;
     export let duration_s: number;
     export let data: number[] = [];
     export let dataColor: string;
-    export let id: string;
     const secondsBetweenSamples: number = duration_s / sampleCount;
 
     let labels: string[] = [];
@@ -82,23 +79,20 @@
     });
 </script>
 
-<ExpandableCard>
-    <h2 slot="preview">{title}</h2>
-    <section class="card-padding" slot="content">
-        <div class="chart-container">
-            <canvas bind:this={canvas}/>
-        </div>
-        <div class="info">
-            <span>Energy</span>
-            <span class="right-aligned">{energy.toFixed(3)}</span>
-            <span class="right-aligned">kWh</span>
-        
-            <span>Average Power</span>
-            <span class="right-aligned">{averagePower.toFixed(3)}</span>
-            <span class="right-aligned">W</span>
-        </div>
-    </section>
-</ExpandableCard>
+<section class="card-padding">
+    <div class="chart-container">
+        <canvas bind:this={canvas}/>
+    </div>
+    <div class="info">
+        <span>Energy</span>
+        <span class="right-aligned">{energy.toFixed(3)}</span>
+        <span class="right-aligned">kWh</span>
+
+        <span>Average Power</span>
+        <span class="right-aligned">{averagePower.toFixed(3)}</span>
+        <span class="right-aligned">W</span>
+    </div>
+</section>
 
 <style>
     section {

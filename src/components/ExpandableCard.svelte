@@ -1,5 +1,5 @@
 <script>
-    export let showIcon = true;
+    export let showExpandIcon = true;
     export let isExpanded = false;
     let contentElement;
 
@@ -22,12 +22,13 @@
 
 <section class="card" class:expanded={isExpanded}>
     <div class="head" on:click={toggle} on:keydown={toggle}>
+        {#if showExpandIcon}
+            <span class="material-icons-round" class:expanded={isExpanded}>expand_circle_down</span>
+        {/if}
         <div class="preview">
             <slot name="preview"></slot>
         </div>
-        {#if showIcon}
-            <span class="material-icons-round" class:expanded={isExpanded}>expand_circle_down</span>
-        {/if}
+        <slot name="icon"></slot>
     </div>
     <div class="content" class:expanded={isExpanded} bind:this={contentElement}>
         <slot name="content"></slot>
@@ -61,8 +62,7 @@
 
     .material-icons-round {
         font-size: 35px;
-        grid-column-start: 3;
-        transform: rotate(90deg);
+        transform: rotate(-90deg);
         transition: transform 0.7s;
     }
     

@@ -6,32 +6,11 @@
     export let required = false;
     export let pattern = null;
     export let step;
+    export let modifyValue = value => value;
     let error = false;
 
     $: {
-        const castedValue = inputTypeCast(type, value);
-        if(castedValue !== "undefined") {
-            value = castedValue;
-        }
-    }
-
-    $: {
-        if(typeof(value) === "number") {
-            value = Math.round(value / step) * step;
-        }
-    }
-
-    function inputTypeCast(type, value) {
-        switch(type) {
-            case "number" || "range": 
-                return Number(value);
-            case "text":
-                return String(value);
-            case "checkbox":
-                return Boolean(value);
-            default:
-                return value;
-        }
+        value = modifyValue(value);
     }
 
     function setInputType(node, type) {

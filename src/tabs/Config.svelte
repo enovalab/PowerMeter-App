@@ -1,6 +1,6 @@
 <script>
     import ConfigCard from "../components/ConfigCard.svelte";
-    import { getDeviceURL, ipPattern } from "../modules/Helpers";
+    import { getDeviceURL, ipPattern, numberPattern } from "../modules/Helpers";
 </script>
 
 <ConfigCard
@@ -71,24 +71,27 @@
     [
         {
             key: "voltage",
-            type: "number",
+            type: "text",
             label: "Voltage",
             required: true,
-            step: 0.1
+            pattern: numberPattern.source,
+            // modifyValue: value => Number(value)
         },
         {
             key: "current",
-            type: "number",
+            type: "text",
             label: "Current",
             required: true,
-            step: 0.1
+            pattern: numberPattern.source,            
+            // modifyValue: value => Number(value)
         },
         {
             key: "phase",
-            type: "number",
+            type: "text",
             label: "Phase",
             required: true,
-            step: 0.1
+            pattern: numberPattern.source,            
+            // modifyValue: value => Number(value)
         }
     ]
 }/>

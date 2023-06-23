@@ -43,5 +43,4 @@
     span[slot="preview"] {
         font-size: 45px;
     }
-    
 </style>

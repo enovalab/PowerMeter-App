@@ -1,7 +1,7 @@
 <script>
     import Form from "./Form.svelte";
     import ExpandableCard from "./ExpandableCard.svelte";
-    import { getDeviceURL, fetchRestAPI } from "../modules/Helpers";
+    import { fetchRestAPI } from "../modules/Helpers";
     import { onMount } from "svelte";
     
     export let title;
@@ -17,11 +17,12 @@
     });
 
     async function handleSubmit() {
-        let fetchData = {};
-        fetchData[nestingKey] = data;
-        const response = await fetchRestAPI(url, "PATCH", fetchData);
-        data = response[nestingKey];
-        isExpanded = false;
+        console.log(data);
+        // let fetchData = {};
+        // fetchData[nestingKey] = data;
+        // const response = await fetchRestAPI(url, "PATCH", fetchData);
+        // data = response[nestingKey];
+        // isExpanded = false;
     }
 
 </script>

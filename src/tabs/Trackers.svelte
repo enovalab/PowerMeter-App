@@ -1,9 +1,11 @@
 <script lang="ts">
-    import { onDestroy } from "svelte";
     import TrackerChart from "../components/TrackerChart.svelte"
+    import TrackerBackupCard from "../components/TrackerBackupCard.svelte";
+    import ExpandableCard from "../components/ExpandableCard.svelte";
+    import AddTrackerCard from "../components/AddTrackerCard.svelte";
+    import { onDestroy } from "svelte";
     import { fetchRestAPI, getDeviceURL } from "../modules/Helpers";
     import type { TrackerSet } from "../modules/Types";
-    import ExpandableCard from "../components/ExpandableCard.svelte";
 
     let trackers: TrackerSet = {};
     
@@ -28,15 +30,26 @@
     }
     pollTrackers();
 
-    function handleDelete(id: string) {
-        console.log(id);
-    }
+    async function handleDelete(id: string, title: string) {
+        if(confirm(`Are you sure you want to delete '${title}'`)) {
+            trackers = await fetchRestAPI(getDeviceURL() + "/api/config/trackers/" + id, "DELETE");
+        }
+    }   
 </script>
+
+<AddTrackerCard/>
 
 {#each Object.entries(trackers) as tracker}
     <ExpandableCard>
         <h2 slot="preview">{tracker[1].title}</h2>
-        <span on:click|stopPropagation={() => {handleDelete(tracker[0])}} class="material-icons-round" slot="icon">delete</span>
+        <span 
+            class="material-icons-round"
+            slot="icon"
+            on:click|stopPropagation={() => {handleDelete(tracker[0], tracker[1].title)}}
+            on:keydown|stopPropagation={() => {handleDelete(tracker[0], tracker[1].title)}}
+        >
+            delete
+        </span>
         <div slot="content">
             {#key tracker}
                 <TrackerChart
@@ -49,6 +62,8 @@
         </div>
     </ExpandableCard>
 {/each}
+
+<!-- <TrackerBackupCard/> -->
 
 <style>
     h2 {

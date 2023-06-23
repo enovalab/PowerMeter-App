@@ -13,7 +13,6 @@
 
     async function handleClick() {
         isOn = !isOn;
-        console.log(isOn);
         try {
             const data = await fetchRestAPI(url, "PATCH", isOn);
             isOn = data;

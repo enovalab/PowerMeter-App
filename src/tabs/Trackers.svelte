@@ -50,7 +50,7 @@
         >
             delete
         </span>
-        <div slot="content">
+        <svelte:fragment slot="content">
             {#key tracker}
                 <TrackerChart
                     duration_s={tracker[1].duration_s}
@@ -59,7 +59,7 @@
                     dataColor="rgb(50, 100, 255)"
                 />
             {/key}
-        </div>
+        </svelte:fragment>
     </ExpandableCard>
 {/each}
 

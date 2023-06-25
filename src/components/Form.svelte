@@ -15,7 +15,6 @@
                 required={field.required}
                 pattern={field.pattern}
                 step={field.step}
-                modifyValue={field.modifyValue}
                 bind:value={data[field.key]}
             />
         {/each}

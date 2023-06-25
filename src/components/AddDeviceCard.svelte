@@ -18,7 +18,7 @@
 
 <ExpandableCard showExpandIcon={false} bind:isExpanded={isExpanded}>
     <span slot="preview" class="material-icons-round">add</span>
-    <div slot="content">
+    <svelte:fragment slot="content">
         <Form on:submit={handleSubmit}  bind:data={data} fields={[
             {
                 key: "name",
@@ -36,7 +36,7 @@
         ]}>
             <span class="material-icons-round">done</span>
         </Form>
-    </div>
+    </svelte:fragment>
 </ExpandableCard>
 
 <style>

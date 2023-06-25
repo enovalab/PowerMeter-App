@@ -6,7 +6,7 @@
     export let required = false;
     export let pattern = null;
     export let step;
-    export let modifyValue = value => value;
+    // export let modifyValue = value => value;
     let error = false;
 
     $: {

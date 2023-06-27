@@ -111,4 +111,31 @@
     :global(a:link, a:visited, a:hover, a:active) {
         text-decoration: none;
     }
+
+    :global(input) {
+        background-color: var(--background-color);
+        padding-left: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border: 0;
+        border-radius: 5px;
+        color: var(--contrast-color);
+        font-family: "Dosis";
+    }
+    
+    :global(input:invalid) {
+        border: 1px solid var(--error-color);
+    }
+    
+    :global(input:focus) {
+        outline: none;
+    }
+    
+    :global(select, option) {
+        font-family: "Dosis";
+        color: var(--contrast-color);
+        background-color: var(--background-color);
+        border-radius: 5px;
+        border: none;
+    }
 </style>

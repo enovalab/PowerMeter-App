@@ -5,9 +5,10 @@
     import AddTrackerCard from "../components/AddTrackerCard.svelte";
     import { onDestroy } from "svelte";
     import { fetchRestAPI, getDeviceURL } from "../modules/Helpers";
-    import type { TrackerSet } from "../modules/Types";
+    import type { Tracker, TrackerSet } from "../modules/Types";
 
-    let trackers: TrackerSet = {};
+    let trackerSet: TrackerSet = {};
+    let trackers: [string, Tracker][] = [];
     
     onDestroy(() => {
         clearInterval(pollingIntervalId);
@@ -19,7 +20,8 @@
         if(pollAgain) {
             fetchRestAPI(getDeviceURL() + "/api/trackers", "GET", undefined, 5000)
             .then(data => {
-                trackers = data;
+                trackerSet = data;
+                trackers = Object.entries(trackerSet).sort(compareTrackers);
             })
             .catch(() => {})
             .finally(() => {
@@ -30,16 +32,28 @@
     }
     pollTrackers();
 
+    function compareTrackers(a: [string, Tracker], b: [string, Tracker]) {
+        if(a[1].duration_s < b[1].duration_s) {
+            return -1;
+        }
+        else if(a[1].duration_s > b[1].duration_s) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
     async function handleDelete(id: string, title: string) {
         if(confirm(`Are you sure you want to delete '${title}'`)) {
-            trackers = await fetchRestAPI(getDeviceURL() + "/api/config/trackers/" + id, "DELETE");
+            trackerSet = await fetchRestAPI(getDeviceURL() + "/api/config/trackers/" + id, "DELETE");
         }
     }   
 </script>
 
-<AddTrackerCard/>
+<AddTrackerCard on:add={pollTrackers}/>
 
-{#each Object.entries(trackers) as tracker}
+{#each trackers as tracker}
     <ExpandableCard>
         <h2 slot="preview">{tracker[1].title}</h2>
         <span 

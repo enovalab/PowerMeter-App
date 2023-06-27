@@ -6,12 +6,8 @@
     export let required = false;
     export let pattern = null;
     export let step;
-    // export let modifyValue = value => value;
+    
     let error = false;
-
-    $: {
-        value = modifyValue(value);
-    }
 
     function setInputType(node, type) {
         node.type = type;
@@ -29,7 +25,7 @@
         class:error
         {step}
         type="checkbox"
-        bind:checked={value}
+        checked={value}
     />
 {:else}
     <input
@@ -39,31 +35,12 @@
         class:error
         {step}
         use:setInputType={type}
-        bind:value={value}
+        {value}
     />
 {/if}
 
 <style>
     * {
         font-size: 22px;
-    }
-
-    input {
-        background-color: var(--background-color);
-        padding-left: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        border: 0;
-        border-radius: 5px;
-        color: var(--contrast-color);
-        font-family: "Dosis";
-    }
-
-    input:invalid {
-        border: 1px solid var(--error-color);
-    }
-
-    input:focus {
-        outline: none;
     }
 </style>

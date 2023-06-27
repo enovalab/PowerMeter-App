@@ -17,7 +17,6 @@
         {title: "Info", icon: "info_outline"}
     ]}>
         <div slot="header">
-            <span class="material-icons-round">restart_alt</span>
             <a href={getDeviceURL() + "/update"}>
                 <span class="material-icons-round">update</span>
             </a>

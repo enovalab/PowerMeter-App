@@ -1,12 +1,22 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+    import { correctObjectType } from "../modules/Helpers";
     import Field from "./Field.svelte";
 
     export let fields = [];
     export let data = {};
+
+    const dispatchEvent = createEventDispatcher();
+
+    function handleSubmit(event) {
+        data = correctObjectType(Object.fromEntries(new FormData(event.target).entries()));
+        dispatchEvent("submit", data);
+    }
 </script>
 
-<form on:submit|preventDefault>
+<form on:submit|preventDefault={handleSubmit}>
     <div class="card-padding">
+        <slot name="fields-before"></slot>
         {#each fields as field}
             <Field
                 key={field.key}
@@ -15,12 +25,13 @@
                 required={field.required}
                 pattern={field.pattern}
                 step={field.step}
-                bind:value={data[field.key]}
+                value={data[field.key] ?? ""}
             />
         {/each}
+        <slot name="fields-after"></slot>
     </div>
     <button type="submit">
-        <slot></slot>
+        <slot name="submit"></slot>
     </button>
 </form>
 

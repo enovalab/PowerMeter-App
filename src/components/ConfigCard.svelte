@@ -16,10 +16,9 @@
         data = response[nestingKey];
     });
 
-    async function handleSubmit() {
-
+    async function handleSubmit(event) {
         let fetchData = {};
-        fetchData[nestingKey] = data;
+        fetchData[nestingKey] = event.detail;
         const response = await fetchRestAPI(url, "PATCH", fetchData);
         data = response[nestingKey];
         isExpanded = false;
@@ -32,10 +31,10 @@
     <svelte:fragment slot="content">
         <Form 
             on:submit={handleSubmit} 
-            bind:fields={fields} 
-            bind:data={data}
+            fields={fields} 
+            data={data}
         >
-            <span class="material-icons-round">done</span>
+            <span slot="submit" class="material-icons-round">done</span>
         </Form>
     </svelte:fragment>
 </ExpandableCard>

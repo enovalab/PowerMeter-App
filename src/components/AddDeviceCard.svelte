@@ -10,7 +10,7 @@
     const dispatchEvent = createEventDispatcher();
 
     function handleSubmit(event) {
-        dispatchEvent("add", data)
+        dispatchEvent("add", event.detail)
         isExpanded = false;
         data = {};
     }
@@ -19,7 +19,7 @@
 <ExpandableCard showExpandIcon={false} bind:isExpanded={isExpanded}>
     <span slot="preview" class="material-icons-round">add</span>
     <svelte:fragment slot="content">
-        <Form on:submit={handleSubmit}  bind:data={data} fields={[
+        <Form on:submit={handleSubmit} data={data} fields={[
             {
                 key: "name",
                 type: "text",
@@ -34,7 +34,7 @@
                 pattern: ipPattern.source
             }
         ]}>
-            <span class="material-icons-round">done</span>
+            <span slot="submit" class="material-icons-round">done</span>
         </Form>
     </svelte:fragment>
 </ExpandableCard>

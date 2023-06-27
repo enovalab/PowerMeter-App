@@ -50,7 +50,7 @@
     <button class:singleton={isSingleton} on:click={handleDeleteClick}>
         <span class="material-icons-round">delete</span>
     </button>
-    <a class="flex-column-center-all" href={url.href} class:offline="{!isOnline}" >
+    <a class="flex-column-center-all" href={isOnline ? url.href : null} class:offline="{!isOnline}" >
         <h2>{name}</h2>
         <span>{ip}</span>
         {#if isOnline}

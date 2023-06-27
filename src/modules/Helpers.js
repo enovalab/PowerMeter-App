@@ -1,5 +1,4 @@
 export const ipPattern = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-export const numberPattern = /^\d*\.?\d+$/;
 
 export function addAlphaToRGB(rgb, alpha) {
     if (alpha < 0) {
@@ -92,4 +91,30 @@ export async function fetchRestAPI(url, method = "GET", requestData, timeoutMill
         throw new Error(errorMessage);
     }
     return responseData;
-}  
+}
+
+export function correctObjectType(data) {
+    let newData = {};
+    if(typeof data !== "object") {
+        return newData;
+    }
+    Object.entries(data).forEach(entry => {
+        const [key, value] = entry;
+        if(value === "object") {
+            newData[key] = correctObjectType(data);
+            return;
+        }
+        if(typeof value === "string") {
+            const number = Number(value);
+            if(!isNaN(number)) {
+                newData[key] = number;
+                return;
+            }
+            if(value === "") {
+                return;
+            }
+            newData[key] = value;
+        }
+    });
+    return newData;
+}

@@ -17,12 +17,12 @@
     });
 
     async function handleSubmit() {
-        console.log(data);
-        // let fetchData = {};
-        // fetchData[nestingKey] = data;
-        // const response = await fetchRestAPI(url, "PATCH", fetchData);
-        // data = response[nestingKey];
-        // isExpanded = false;
+
+        let fetchData = {};
+        fetchData[nestingKey] = data;
+        const response = await fetchRestAPI(url, "PATCH", fetchData);
+        data = response[nestingKey];
+        isExpanded = false;
     }
 
 </script>

@@ -95,7 +95,7 @@
         <span>{formatDuration(info.uptime_ms)}</span>
         <b>Firmware Version</b>
         <span>{info.firmware}</span><b>Repository</b>
-        <a href="https://github.com/enovalab/PowerMeter-App">enovalab/<wbr>PowerMeter-Firmware</a>
+        <a href="http://github.com/enovalab/PowerMeter-App">enovalab/<wbr>PowerMeter-Firmware</a>
         <b>Filesystem</b>
         <span>{(info.filesystem.used_B / info.filesystem.total_B * 100).toFixed(0)}% used</span>        
         <b>Memory (Heap)</b>
@@ -107,7 +107,7 @@
     <b>App Version</b>
     <span>0.0.0</span>
     <b>Repository</b>
-    <a href="https://github.com/enovalab/PowerMeter-App">enovalab/<wbr>PowerMeter-App</a>
+    <a href="http://github.com/enovalab/PowerMeter-App">enovalab/<wbr>PowerMeter-App</a>
 </InfoCard>
 
 <style>

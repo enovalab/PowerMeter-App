@@ -6,10 +6,10 @@ const deploy = true;
 
 // https://astro.build/config
 export default defineConfig({
-    site: "http://enovalab.github.io",
+    site: "https://enovalab.github.io",
     base: deploy ? "/PowerMeter-App" : "",
     integrations: [
-        serviceWorker(),
+        // serviceWorker(),
         svelte()
     ]
 });

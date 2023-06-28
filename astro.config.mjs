@@ -9,7 +9,7 @@ export default defineConfig({
     site: "https://enovalab.github.io",
     base: deploy ? "/PowerMeter-App" : "",
     integrations: [
-        // serviceWorker(),
+        serviceWorker(),
         svelte()
     ]
 });

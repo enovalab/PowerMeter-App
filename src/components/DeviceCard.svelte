@@ -18,7 +18,7 @@
 
     function pollPower() {
         if(pollAgain) {
-            fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000)
+            fetchRestAPI(`https://${ip}/api/power`, "GET", undefined, 5000)
             .then(data => {
                 isOnline = true;
                 power = data.activePower_W;

@@ -1,6 +1,7 @@
 <script>
     export let showExpandIcon = true;
     export let isExpanded = false;
+
     let contentElement;
 
     $: if(contentElement) {

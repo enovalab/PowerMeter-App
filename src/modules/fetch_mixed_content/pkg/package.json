@@ -1,0 +1,17 @@
+{
+  "name": "fetch_mixed_content",
+  "collaborators": [
+    "The wasm-bindgen Developers"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "fetch_mixed_content_bg.wasm",
+    "fetch_mixed_content.js",
+    "fetch_mixed_content.d.ts"
+  ],
+  "module": "fetch_mixed_content.js",
+  "types": "fetch_mixed_content.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

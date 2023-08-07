@@ -77,7 +77,7 @@
     </ExpandableCard>
 {/each}
 
-<!-- <TrackerBackupCard/> -->
+<TrackerBackupCard/>
 
 <style>
     h2 {

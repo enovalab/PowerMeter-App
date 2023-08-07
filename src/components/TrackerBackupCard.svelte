@@ -2,6 +2,7 @@
     import { fetchRestAPI, getDeviceURL } from "../modules/Helpers";
 
     let uploadElement: HTMLInputElement;
+    let uploadFormElement: HTMLFormElement;
 
     function handleUpload() {
         uploadElement.click();
@@ -9,32 +10,45 @@
             if(uploadElement.files) {
                 const file = uploadElement.files[0];
                 const fileReader = new FileReader();
-                fileReader.addEventListener("load", event => {
-                    console.log(event.target?.result);
-                    fetchRestAPI(getDeviceURL() + "/api/trackers", "PUT", JSON.parse(event.target?.result))
-                    .then(() => {
-                        alert("Backup has been uploaded sucessfully");
-                    })
-                    .catch(error => {
+                fileReader.addEventListener("load", async event => {
+                    try {
+                        const response = await fetchRestAPI(getDeviceURL() + "/api/trackers", "PUT", JSON.parse(event.target?.result));
+                        if(response) {
+                            alert("Backup has been uploaded sucessfully");
+                            uploadFormElement.reset();
+                        }
+                    }
+                    catch(error) {
                         alert("Error while uploading Backup: " + error)
-                    });
+                    }
                 });
                 fileReader.readAsText(file);
             }
         }, false);
+    }
+
+    function handleDownload() {
+        fetch(getDeviceURL() + "/api/trackers")
+        .then(response => response.blob())
+        .then(data => {
+            const link = document.createElement("a");
+            link.href = window.URL.createObjectURL(data);
+            link.download = "TrackerBackup.json";
+            link.click();
+        });
     }
 </script>
 
 <section class="card card-padding">
     <h2>Backup</h2>
     <div class="grid">
-        <a 
+        <span
+            on:click={handleDownload}
+            on:keydown={handleDownload}
             class="material-icons-round"
-            href={getDeviceURL() + "/api/trackers"}
-            download
         >
             file_download
-        </a>
+        </span>
         <span
             on:click={handleUpload}
             on:keydown={handleUpload}
@@ -46,7 +60,9 @@
         <span>Upload Backup</span>
     </div>
 </section>
-<input bind:this={uploadElement} type="file" hidden>
+<form bind:this={uploadFormElement} hidden>
+    <input bind:this={uploadElement} type="file">
+</form>
 
 <style>
     .grid {
@@ -64,5 +80,6 @@
     .material-icons-round {
         font-size: 45px;
         color: var(--contras-color);
+        cursor: pointer;
     }
 </style>

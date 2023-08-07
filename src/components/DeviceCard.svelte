@@ -1,7 +1,7 @@
 <script lang="ts">
     import Switch from "./Switch.svelte";
     import { createEventDispatcher, onDestroy } from "svelte";
-    import { fetchRestAPI, roundToStep } from "../modules/Helpers";
+    import { fetchRestAPI, getDeviceURL, roundToStep } from "../modules/Helpers";
 
     export let name = "Power Meter";
     export let ip = "0.0.0.0";
@@ -18,7 +18,7 @@
 
     function pollPower() {
         if(pollAgain) {
-            fetchRestAPI(`https://${ip}/api/power`, "GET", undefined, 5000)
+            fetchRestAPI(`http://${ip}/api/power`, "GET", undefined, 5000)
             .then(data => {
                 isOnline = true;
                 power = data.activePower_W;
